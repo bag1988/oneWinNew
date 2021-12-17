@@ -1,0 +1,27 @@
+﻿@model List<curatorModel>
+
+<h5>@ViewBag.NameArea</h5>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Список кураторов</li>
+  </ol>
+</nav>
+
+
+@if (Model != null)
+{
+    <div class="viewCurator" data-controller="@ViewContext.RouteData.Values["Controller"].ToString()">
+        @foreach (curatorModel doc in Model)
+        {
+            <nav class="nav nav-pills">
+                <span data-doc="@doc.Id">@doc.FIO</span>
+               
+                    <a asp-action="CreateCurator" asp-route-idcurator="@doc.Id" class="nav-item nav-link">Редактировать</a>
+                    <span onclick="deleteCurator('@doc.Id')" class="nav-item nav-link text-danger">Удалить</span>
+                    <span data-del="@doc.Id" style="display:none;" class="nav-item nav-link text-danger">Подтверждаю удаление</span>
+               
+            </nav>
+        }
+    </div>
+}

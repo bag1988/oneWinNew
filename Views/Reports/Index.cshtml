@@ -1,0 +1,89 @@
+﻿@using oneWin.Service
+@{
+    ViewData["Title"] = "Отчеты";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <div class="form-group row">
+        <label for="startDate" class="col-md-2 col-form-label">Дата с:</label>
+        <div class="col-md-4">
+            <input name="startDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <label for="endDate" class="col-md-2 col-form-label">Дата по:</label>
+        <div class="col-md-4">
+            <input name="endDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+    </div>
+    <hr />
+    <h5>Отчет по количеству принятых заявлений</h5>
+    
+    <div class="form-group row">
+        <div class="col-md-7">
+            <select name="typeReports" class="form-control" asp-items="@(new SelectList(dictionaryList.typeReports ,"Key","Value"))">
+            </select>
+        </div>
+        <div class="form-check-inline">
+            <input class="form-check-input" type="radio" name="radioOfDocType" id="radioOfDocType1" value="0" checked>
+            <label class="form-check-label" for="radioOfDocType1">
+                Word
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <input class="form-check-input" type="radio" name="radioOfDocType" id="radioOfDocType2" value="1">
+            <label class="form-check-label" for="radioOfDocType2">
+                Exel
+            </label>
+        </div>
+            <button type="button" onclick="getReports('report')" class="btn btn-primary" >Сформировать отчет</button>
+    </div>
+    <hr />
+    <div>
+        <button type="button" onclick="getReports('reportGarden')" class="btn btn-primary" >Реестр для детского садика</button>
+        <button type="button" onclick="getReports('reportHandred')" class="btn btn-primary" >Отчет по 110</button>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="form-check-inline">
+            <input class="form-check-input" type="radio" name="radioOfSolutionType" id="radioOfSolutionType1" value="0" checked>
+            <label class="form-check-label" for="radioOfSolutionType1">
+                По дате подачи
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <input class="form-check-input" type="radio" name="radioOfSolutionType" id="radioOfSolutionType2" value="1">
+            <label class="form-check-label" for="radioOfSolutionType2">
+                По дате решения
+            </label>
+        </div>
+        <button type="button" onclick="getReports('reportSolution')" class="btn btn-primary" >Отчет о решениях</button>
+    </div>
+    <hr />
+    <h5>Отчет по количеству принятых решений</h5>
+    <div class="form-group row">
+        <div class="col-md-6">
+            <select name="TypeOfReportLists" class="form-control">
+                <option value="9">Отчет по дате поданных заявлений</option>
+                <option value="10">Отчет по дате принятого решения</option>
+                <option value="11">Отчет ПСМ 740 по дате принятого решения</option>
+                <option value="12">Отчет ПСМ 740 по дате поданных заявлений</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="TypeOfReportListSolutions" class="form-control">
+                <option value="Все">Все</option>
+                <option value="Положительно">Положительно</option>
+                <option value="Отрицательно">Отрицательно</option>
+                <option value="Отказано в приёме">Отказано в приёме</option>
+                <option value="Отказано в осуществлении">Отказано в осуществлении</option>
+                <option value="Отозвано">Отозвано</option>
+                <option value="Переадресовано">Переадресовано</option>
+                <option value="">Проверка пустых решений</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button type="button" onclick="getReports('reportCountSolution')" class="btn btn-primary">Сформировать отчет</button>
+        </div>
+    </div>
+
+</div>

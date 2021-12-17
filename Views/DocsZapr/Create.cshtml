@@ -1,0 +1,126 @@
+﻿@model zaprDocModel
+@inject getList list
+@{
+    ViewData["Title"] = @Context.Request.Query["idDoc"].ToString() != "" ? "Редактировать запрашиваемый документ" : "Добавить запрашиваемый документ";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" asp-route-legal="false" class="nav-item nav-link">Только для физических лиц</a>
+        <a asp-action="index" asp-route-legal="true" class="nav-item nav-link">Только для юридических лиц</a>
+        <a asp-action="create" class="nav-item nav-link active">Добавить</a>
+    </nav>
+    <hr />
+   
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model!=null&&Model.ZaprDocID != Guid.Empty)
+        {
+            <input asp-for="ZaprDocID" type="hidden" class="form-control" />
+        }
+        <div class="form-group row">
+            <label asp-for="Name" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Name" class="form-control"></textarea>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>        
+        <div class="form-group row">
+            <label asp-for="CountDay" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CountDay" class="form-control" />
+                <span asp-validation-for="CountDay" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                Тип запроса
+            </div>
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="HTTPZapr" /> @Html.DisplayNameFor(model => model.HTTPZapr)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="e_mailzapr" /> @Html.DisplayNameFor(model => model.e_mailzapr)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="postzapr" /> @Html.DisplayNameFor(model => model.postzapr)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-2">
+               <label class="form-check-label" style="padding-left:15px;">
+                <input class="form-check-input" asp-for="bankzapr" /> @Html.DisplayNameFor(model => model.bankzapr)
+            </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="File" class="col-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="File" class="form-control" />
+                @if (Model != null && Model.ZaprDocID != Guid.Empty && Model.File != null)
+                {
+                    <a href="~/returnFile/index?urlFile=Template/@Model.File">@Model.File</a>
+                }
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <input name="fileUrl" type="file" class="form-control-file" />
+            </div>
+        </div>       
+        <div class="form-group row">
+            <label asp-for="Summ" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input type="number" asp-for="Summ" class="form-control"/>
+                <span asp-validation-for="Summ" class="text-danger"></span>
+            </div>
+        </div> 
+        <div class="form-group row">
+            <label asp-for="HTTP" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HTTP" class="form-control"/>
+                <span asp-validation-for="HTTP" class="text-danger"></span>
+            </div>
+        </div>       
+        <div class="form-group row">
+            <label asp-for="Params" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Params" class="form-control"/>
+                <span asp-validation-for="Params" class="text-danger"></span>
+            </div>
+        </div>       
+        <div class="form-group row">
+            <label asp-for="BankName" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="BankName" class="form-control"/>
+                <span asp-validation-for="BankName" class="text-danger"></span>
+            </div>
+        </div>       
+        <div class="form-group row">
+            <label asp-for="BankParams" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="BankParams" class="form-control"/>
+                <span asp-validation-for="BankParams" class="text-danger"></span>
+            </div>
+        </div>  
+        <div class="form-group row">
+            <label asp-for="OrgZaprID" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select asp-for="OrgZaprID" class="form-control" asp-items="@(await list.orgZaprList())"></select>
+                <span asp-validation-for="OrgZaprID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row"  style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a class="btn btn-link" asp-action="Index">Назад к списку</a>
+        </div>
+    </form>
+    
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

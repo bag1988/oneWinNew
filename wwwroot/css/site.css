@@ -1,0 +1,551 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.h2 {
+    font-size: 2em !important;
+    padding: 0.5em !important;
+}
+
+.col-md {
+    min-width: 100px;
+    margin: 2px;
+}
+
+.alert-th input {
+    color: #007bff;
+    border-color: #007bff;
+    /*color: #856404 !important;
+    background-color: #fff3cd !important;
+    border-color: #ffeeba !important;*/
+}
+@page {
+    size: auto;
+}
+@media print {
+    .table[name=viewTableHome] {
+        font-size: 1.0em;
+    }
+    .NoPrintDisplay {
+        display: none;
+    }
+}
+
+.bottomFixed {
+    position: fixed;
+    z-index: 10;
+    padding: 10px;
+    bottom: 0;
+    background: #d1ecf1;
+    width: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.border-inset {
+    margin: 0.5%;
+    padding: 0.5em !important;
+    border-radius: 0.5em;
+    background-color: rgba(0,0,0,.1);
+}
+
+    .border-inset .row {
+        margin: 0px 0px;
+    }
+
+        .border-inset .row input[class~="form-control"], .border-inset .row select[class~="form-control"], .border-inset .row label[class~="form-control"] {
+            height: calc(1.5em + .5rem + 2px);
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+
+        .border-inset .row .btn {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+
+        .border-inset .row div[class^="col-md"] {
+            padding: 0.25em;
+        }
+
+        .border-inset .row label[class="col-form-label"] {
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+        }
+
+.disabledSpan {
+    height: auto !important;
+    background-color: #f0f2f4;
+}
+
+@media (min-width: 768px) {
+    .border-inset.col-md-3 {
+        max-width: 24%;
+        flex-basis: 24%;
+    }
+
+    .border-inset.col-md-4 {
+        max-width: 32.3%;
+        flex-basis: 32.3%;
+    }
+
+    .border-inset.col-md-5 {
+        max-width: 40.6%;
+        flex-basis: 40.6%;
+    }
+
+    .border-inset.col-md-8 {
+        max-width: 65.6%;
+        flex-basis: 65.6%;
+    }
+
+    .border-inset.col-md-9 {
+        max-width: 74%;
+        flex-basis: 74%;
+    }
+
+    .border-inset.col-md-12 {
+        max-width: 99%;
+        flex-basis: 99%;
+    }
+}
+
+.border-inset h5 {
+    font-size: 1em;
+    margin-bottom: 0px;
+    margin-left: 0.25em;
+}
+
+.border-inset label {
+    font-size: 0.85em;
+}
+
+/*td[data-col="DocNo"] a:hover::after {
+    content: " Редактировать";
+    font-size: 0.8em;
+}*/
+
+/*td[data-col="LName"] a:hover::after {
+    content: " Копировать";
+    font-size: 0.8em;
+}*/
+
+td[data-col="DocNo"], td[data-col="LName"] {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.tr-danger {
+    color: #721c24 !important;
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+}
+
+.navbar {
+    background-color: rgba(52, 59, 64, 0.9);
+    transition: all 0.5s;
+    color: #fff;
+    height: 70px;
+    font-size: 1.2em;
+    z-index: 100;
+}
+
+    .navbar a {
+        color: #fff !important;
+        background-image: linear-gradient( #2dc997, #2dc997);
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size .3s;
+    }
+
+        .navbar a:hover, .navbar a:focus {
+            background-size: 100% 2px;
+            color: #2dc997 !important;
+        }
+
+    .navbar .dropdown-menu {
+        background-color: rgba(52, 59, 64, 0.9);
+        transition: all 0.5s;
+        color: #fff;
+        padding: 1em;
+    }
+
+        .navbar .dropdown-menu a {
+            background-color: transparent;
+            transition: all 0.5s;
+        }
+
+table[name=viewTableHome] {
+    font-size: 0.8em;
+}
+table[name=viewTableHome] tr td {
+    vertical-align:middle;
+}
+
+    table[name=viewTableHome] input[type=checkbox] {
+        -ms-transform: scale(1.5); /* IE */
+        -moz-transform: scale(1.5); /* FF */
+        -webkit-transform: scale(1.5); /* Safari and Chrome */
+        -o-transform: scale(1.5); /* Opera */
+        transform: scale(1.5);
+        margin: 5px;
+    }
+
+@media (max-width: 1800px) {
+    .col-xl-6 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1199px) {
+    .navbar-collapse {
+        padding: 1em;
+        background-color: rgba(52, 59, 64, 0.9);
+        transition: all 0.5s;
+    }
+}
+
+.btn-green {
+    background: #2dc997;
+    outline: none;
+    border: 0;
+    padding: 10px 10px;
+    color: #fff !important;
+    transition: 0.2s;
+    cursor: pointer;
+    margin: 0.2em;
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+    .btn-green:hover, .btn-green:focus {
+        background: #128e66;
+        color: #fff !important;
+        text-decoration: none;
+        box-shadow: 1px 5px 5px #000000;
+    }
+
+    .btn-green:active {
+        transition: 0s;
+        box-shadow: inset 0px 0px 5px 5px rgb(0, 0, 0, 0.6);
+        text-shadow: 3px 4px 5px #000;
+        text-decoration: none;
+    }
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #f0f2f4;
+}
+
+.btn-red {
+    background-color: #ff0000;
+}
+
+    .btn-red:hover, .btn-red:focus {
+        background-color: #cc0202;
+    }
+
+.colorDateRed {
+    color: red;
+    font-weight: bold;
+}
+
+.colorDateOr {
+    color: #FF00Ae;
+    font-weight: bold;
+}
+
+.box-shadow-insert {
+    box-shadow: inset 0px 0px 5px 1px rgb(0 0 0 / 30%);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.1);
+}
+
+.thead-green tr th {
+    color: #fff;
+    background-color: #1fba89;
+    vertical-align: middle;
+    vertical-align: bottom;
+}
+
+    .thead-green tr th a {
+        color: #FFF;
+        text-decoration: none;
+    }
+
+.th80:hover div input {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    width: 150px;
+    height: 2.25em;
+    left: -35px;
+    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 40%);
+}
+
+.thead-green tr th div {
+    display: block;
+    height: 2.3em;
+    margin-top: 0.5em;
+    width: inherit;
+    position: relative;
+}
+
+
+.th250 {
+    min-width: 250px;
+}
+
+.th80 {
+    width: 80px;
+}
+
+.nav-green {
+    background: #1fba89;
+    padding: 0.4em 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0px 5px 5px 0px rgb(0 0 0 / 20%);
+}
+
+    .nav-green .nav-link {
+        padding: 0.3em 0.7em;
+        background-image: linear-gradient( #fff, #fff);
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 3px;
+        transition: background-size .3s;
+        color: #fff;
+        font-size: 1.05em;
+        font-weight: 700;
+    }
+
+        .nav-green .nav-link:hover, .nav-green .nav-link:focus {
+            background-size: 100% 3px;
+            color: #fff;
+        }
+/*.nav-green .nav-link:active {
+            background: #0d6b4d;
+            color:#fff!important;
+        }*/
+.nav-red {
+    background-image: linear-gradient( #DC425E, #DC425E) !important;
+    color: #DC425E !important;
+}
+
+    .nav-red:hover, .nav-red:focus {
+        color: #C92D49 !important;
+    }
+
+    .nav-red:active {
+        color: red !important;
+    }
+
+.modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+h2 {
+    display: block;
+    text-align: center;
+}
+/* Provide sufficient contrast against white background */
+a {
+    color: blue;
+}
+
+.bg-req {
+    background-color: #80eac8 !important;
+}
+
+
+button[name=updateDate] {
+    float: right;
+}
+
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    line-height: 1.2;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+
+.Process {
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+    float: left;
+    background-position: center !important;
+}
+
+.Accept {
+    background: url('/Images/new.png');   
+}
+
+.Send {
+    background: url('/Images/send.png');
+   
+}
+
+.Get {
+    background: url('/Images/return.png');   
+}
+
+.http {
+    background: url('/Images/http.png');  
+}
+
+/*.write {
+    background: white url('/Images/write.png');
+    background-size: 100% 30px;
+    float: left;
+}
+
+.el {
+    background: white url('/Images/el.png');
+    background-size: 100% 30px;
+    float: left;
+}*/
+
+.Insert {
+    background: url('/Images/ok.png');   
+}
+
+table th {
+    text-align: center;
+    vertical-align: baseline;
+}
+
+.paddingChild5 > div {
+    padding: 5px;
+}
+
+    .paddingChild5 > div label {
+        padding-right: 5px;
+    }
+
+.displayInline > div div {
+    display: inline-block;
+    width: 49%;
+}
+
+.displayInline > div legend {
+    font-size: 1.2em;
+}
+
+.viewDoc, .viewCurator, .guideList {
+    max-height: 65vh;
+    overflow-x: no-display;
+    overflow-y: auto;
+}
+
+    .viewCurator span {
+        display: block;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+        .viewDoc span:hover, #viewPartial span:hover, #adminProcList span:hover, .viewCurator span:hover {
+            text-decoration: underline;
+        }
+
+#viewPartial span, #adminProcList span {
+    cursor: pointer;
+}
+
+#adminProcList label {
+    display: block;
+}
+
+span[onclick] {
+    cursor: pointer;
+    color: #0366d6;
+}
+
+.guideList span[data-doc], .viewDoc span[data-doc] {
+    display: block;
+    cursor: pointer;
+}
+
+.guideList div, .viewDoc div {
+    padding: 5px;
+}
+
+.guideList span, .viewDoc span, .guideList a, .viewDoc a, .viewDoc label {
+    padding: 10px;
+}
+
+    .viewDoc label input {
+        margin-right: 5px;
+    }
+
+.viewDoc li {
+    padding: 5px;
+}

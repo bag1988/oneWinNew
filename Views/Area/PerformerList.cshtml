@@ -1,0 +1,30 @@
+﻿@model List<performerModel>
+
+<h5>@ViewBag.NameDepartment</h5>
+<input type="hidden" name="idDepartment" value="@ViewBag.idDepartment"/>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><span onclick="getListCurator()">Список кураторов</span></li>
+    <li class="breadcrumb-item"><span onclick="getDepartmentForCurator('@ViewBag.idCurator')">Список отделов</span></li>
+    <li class="breadcrumb-item active" aria-current="page">Список исполнителей</li>
+  </ol>
+</nav>
+<div class="viewDoc" data-controller="area" >           
+</div>
+
+@if (Model != null)
+{
+    <div class="viewCurator" data-controller="@ViewContext.RouteData.Values["Controller"].ToString()">
+        @foreach (performerModel doc in Model)
+        {
+            <nav class="nav nav-pills">
+                <span data-doc="@doc.Id">@doc.FIO</span>
+                
+                    <a asp-action="CreatePerformer" asp-route-idPerformer="@doc.Id" class="nav-item nav-link">Редактировать</a>
+                    <span onclick="deletePerformer('@doc.Id')" class="nav-item nav-link text-danger">Удалить</span>
+                     <span data-del="@doc.Id" style="display:none;" class="nav-item nav-link text-danger">Подтверждаю удаление</span>
+               
+            </nav>
+        }
+    </div>
+}

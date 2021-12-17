@@ -1,0 +1,79 @@
+﻿@model guide
+    @{
+    ViewData["Title"] = Model.nameTitle;
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" asp-route-nameTable="@Context.Request.Query["nameTable"]" class="nav-item nav-link active">Список</a>
+       
+            <span onclick="createGuide()" class="nav-item nav-link">Добавить</span>
+       
+    </nav>
+    <hr />
+    <form asp-action="index" method="get">
+        <input type="hidden" name="nameTable" value="@(Context.Request.Query["nameTable"])" />
+        <div class="form-group row">
+            <label for="searchName" class="col-form-label col-md-2">Наименование</label>
+            <div class="col-md-6">
+                <input id="searchName" name="searchName" value="@Context.Request.Query["searchName"]" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Поиск" class="btn btn-primary" />
+                <a asp-action="index" asp-route-nameTable="@Context.Request.Query["nameTable"]" class="btn btn-light">Очистить поиск</a>
+            </div>
+        </div>
+    </form>
+    <hr />
+    @if (Model != null)
+    {
+        <div class="guideList">
+            @foreach (var doc in Model.list)
+            {
+
+                <div>
+                   <span data-doc="@doc.id">@doc.Name</span>
+                    
+                        <div style="display:none;" name="actionMenu">
+                            <span onclick="createGuide('@doc.id')">Редактировать</span>
+                            <span onclick="deleteGuide('@doc.id')" class="text-danger">Удалить</span>
+                            <span data-del="@doc.id" style="display:none;" class="text-danger">Подтверждаю удаление</span>
+                        </div>
+                    
+                </div>
+
+            }
+        </div>
+    }
+    <hr />
+    <div id="viewPartial">
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewGuideCreate" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:1000px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="idGuide" />
+                <div class="form-group row">
+                    <label for="nameGuide" class="col-md-2 col-form-label">Наименование</label>
+                    <div class="col-md-10">
+                        <textarea name="nameGuide" class="form-control"></textarea>
+                    </div>
+                </div>  
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveButton" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

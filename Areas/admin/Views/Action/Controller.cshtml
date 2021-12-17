@@ -1,0 +1,46 @@
+﻿@model IEnumerable<controlerModel>
+    @{
+        ViewData["Title"] = "Список Контроллеров";
+    }
+    <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+    <div class="col-md-8 offset-md-2">
+         <nav class="nav nav-pills nav-justified">
+            <a asp-area="admin" asp-controller="action" asp-action="index" class="nav-item nav-link">Действия</a>
+            <a asp-area="admin" asp-controller="action" asp-action="controller" class="nav-item nav-link active">Контроллеры</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateAction" class="nav-item nav-link">Добавить действие</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateController" class="nav-item nav-link">Добавить контроллер</a>
+        </nav>        
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Адрес</th>
+                    <th>Роли</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            @foreach (var role in Model)
+            {
+                <tr class="@(ViewBag.Controller.Contains(role.addressController)?"":"tr-danger")">
+                    <td>@role.nameController</td>
+                    <td>@role.addressController</td>
+                    <td>
+                       <div id=@("viewRoles"+role.id)>
+                        @foreach (var r in role.roleController)
+                        {
+                            <b>@r.Role.Name</b><br>
+                        }
+                    </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm" asp-area="admin" asp-controller="action" asp-action="CreateController" asp-route-id="@role.id">Редактировать</a>
+                        <span class="btn btn-sm" onclick="AddRoleController('@role.id')">Добавить роли</span>
+                        <span class="btn btn-sm" onclick="deleteAction('@role.id', 'controller')">Удалить</span>
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+    <script src="~/js/action.js"></script>

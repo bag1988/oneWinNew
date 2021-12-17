@@ -1,0 +1,31 @@
+﻿@model Guid
+@inject getList list
+@{
+    ViewData["Title"] = "Запросы";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+
+<nav class="nav nav-pills nav-justified">
+    <a asp-action="edit" asp-controller="create" asp-route-regId="@Model" class="nav-item nav-link">Заявитель</a>
+    <a asp-action="index" asp-controller="family" asp-route-regId="@Model" class="nav-item nav-link">Состав семьи</a>
+    <a asp-action="Transfer" asp-controller="family" asp-route-regId="@Model" class="nav-item nav-link active">Запросы</a>
+   @* <a asp-action="sogl" asp-controller="family" asp-route-regId="@Model" class="nav-item nav-link">Согласования</a>*@
+</nav>
+<hr />
+
+<div class="form-group">    
+        <a asp-action="addtransfer" asp-controller="family" asp-route-regId="@Model" class="btn btn-primary mb-1">Добавить запись</a>
+        <button type="button" onclick="generateTransfer()" class="btn btn-outline-primary mb-1">Сформировать запросы</button>
+        <button type="button" onclick="generateTransfer('true')" class="btn btn-outline-primary mb-1">Сформировать запросы и рассчитать стоимость</button>
+        <label class="col-form-label ml-1"><input name="fullFamily" class="form-check-label" type="checkbox" /> вывод всего состава семьи в запрос</label>
+</div>
+<hr />
+<input type="hidden" name="idTransfer" value="@Model" />
+<div name="loadtransfer">
+    <partial name="loadtransfer" model="@Model"></partial>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script src="~/js/create.js" asp-append-version="true"></script>

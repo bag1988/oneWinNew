@@ -1,0 +1,26 @@
+﻿@model oneWin.Models.generalModel.orgIssueModel
+@{
+    ViewData["Title"] = "Удаление органа выдавшего документы";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+ 
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>Удаление этих данных приведет к безвозвратному удалению записи <b>@Model.Name</b>!!!</strong>
+    </p>
+</div>
+
+<div>
+    <form method="post" class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input name="idDoc" type="hidden" value="@Model.Id" />
+        <div class="form-group">
+                <label for="Password">Пароль администратора</label>
+                <input name="Password" class="form-control" />                
+            </div>
+        <button class="btn btn-danger" type="submit">Удалить запись</button>
+        <a class="btn btn-sm" asp-action="index">Отмена</a>
+    </form>
+</div>
+</div>

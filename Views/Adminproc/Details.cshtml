@@ -1,0 +1,76 @@
+@using oneWin.Service
+@model oneWin.Models.adminProcDetalis
+@inject getList list
+@{
+    ViewData["Title"] ="Административная процедура номер "+@Model.docReg.Number;
+}
+<div class="col">
+     <h2>@ViewData["Title"]</h2> 
+    
+    <div class="row">
+       <b>Статус:</b>
+       <ul><li>@(Model.docReg.Selected?"Активна":"Неактивна")</li></ul>
+   </div>
+   <div class="row">
+       <b>Полное наименование:</b>
+       <ul><li>@Model.docReg.RegName</li></ul>
+   </div>
+   <div class="row">
+       <b>Срок исполнения:</b>
+       <ul><li>@Model.docReg.IssueTerms - @(list.TypeIssueList().Result.First(x=>x.Value==Model.docReg.TypeIssue.Trim()).Text)</li></ul>
+   </div>
+   <div class="row">
+       <b>Ответственный:</b>
+       <ul>
+       @foreach(var i in Model.performer)
+        {
+            <li>@i.FIO</li>
+        }
+        </ul>
+   </div>
+   <div class="row">
+       <b>Исполнители:</b>
+       <ul>
+       @foreach(var i in Model.performerList)
+        {
+            <li>@i.FIO</li>
+        }
+        </ul>
+   </div>
+   <div class="row">
+       <b>Документы:</b>
+       <ul>
+       @foreach(var i in Model.docs)
+        {
+            <li>@i.Name</li>
+        }
+        </ul>
+   </div>
+   <div class="row">
+       <b>Документы для запросов:</b>
+       <ul>
+       @foreach(var i in Model.zarp)
+        {
+            <li>@i.Name</li>
+        }
+        </ul>
+   </div>
+   <div class="row">
+       <b>Нормативные документы:</b>
+       <ul>
+       @foreach(var i in Model.normDoc)
+        {
+            <li><a href="@i.URL" target="_blank">@i.Name</a></li>
+        }
+        </ul>
+   </div>
+   <div class="row">
+       <b>Согласования:</b>
+       <ul>
+       @foreach(var i in Model.soglasovaniyas)
+        {
+            <li>@i.Name</li>
+        }
+        </ul>
+   </div>
+</div>

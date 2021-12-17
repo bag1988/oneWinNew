@@ -1,0 +1,8 @@
+﻿@model docZapr
+@inject getList list
+
+
+@foreach (var d in await list.getZaprForProc(Model.regId))
+{
+    <label style="display: block;"><input type="checkbox" value="@d.Key" name="NameZpDop" checked="@(Model.selectList!=null?Model.selectList.Contains((Guid)d.Key):false)" /> @d.Value</label>
+}

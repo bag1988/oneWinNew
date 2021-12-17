@@ -1,0 +1,9 @@
+﻿@model soglasovaniyaModel
+@inject getList list
+
+<h4>Просмотр информации</h4>
+<ul>
+    <li><b>Наименование</b> @Model.Name</li>
+    <li><b>Кол-во листов</b> @Model.CounList</li>  
+    <li><b>Организация</b> @(list.sogOrgList().Result.FirstOrDefault(x=>x.Value==Model.SoglOrgID.ToString())!=null?list.sogOrgList().Result.FirstOrDefault(x=>x.Value==Model.SoglOrgID.ToString()).Text:"")</li>
+</ul>

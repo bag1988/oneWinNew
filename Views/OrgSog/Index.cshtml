@@ -1,0 +1,51 @@
+﻿@model IEnumerable<sogOrgModel>
+@{
+    ViewData["Title"] = "Справочник организаций для согласований";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2> 
+<div class="row">
+<div class="col-md-6">
+      
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" class="nav-item nav-link active">Список организаций</a>
+        <a asp-action="create" class="nav-item nav-link">Добавить</a>
+    </nav>
+    <hr />
+    <form asp-action="index" method="get">        
+        <div class="form-group row">
+            <label for="searchName" class="col-form-label col-md-3">Наименование</label>
+            <div class="col-md-4">
+                <input id="searchName" name="searchName" value="@Context.Request.Query["searchName"]" class="form-control" />
+            </div>
+            <div class="col-md-5">
+                <input type="submit" value="Поиск" class="btn btn-primary" />
+                <a asp-action="index" class="btn btn-light">Очистить поиск</a>
+            </div>
+        </div>
+        </form>
+     <hr />
+    @if (Model != null)
+    {
+        <div class="viewDoc" data-controller="@ViewContext.RouteData.Values["Controller"].ToString()">
+            @foreach (sogOrgModel doc in Model)
+            {             
+             
+             <div>
+                       <span data-doc="@doc.SoglOrgID">@doc.DeptName</span>
+                        
+                            <div style="display:none;" name="actionMenu">
+                                <a  asp-action="create" asp-route-idDoc="@doc.SoglOrgID">Редактировать</a>
+                                <a class="text-danger" asp-action="delete" asp-route-idDoc="@doc.SoglOrgID">Удалить</a>
+                            </div>
+                        
+                    </div>
+            }
+        </div>
+    }
+    <hr />
+  
+</div>
+ <div class="col-md-6" id="viewPartial">
+       
+   </div>
+</div>

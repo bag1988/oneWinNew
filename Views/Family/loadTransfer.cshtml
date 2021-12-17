@@ -1,0 +1,152 @@
+﻿@model Guid
+
+@inject getList list
+
+@if (Model != Guid.Empty)
+{
+    List<msgModel> msg = await list.loadTransfer(Model);
+    if (msg.Count > 0)
+    {
+        <table class="table table-sm table-bordered table-striped">
+            <thead class="thead-green">
+                <tr>
+                    <th>
+                        Вид справки
+                    </th>
+                    <th>
+                        Действие
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().File)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().PayNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().LName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().FName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().MName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().DocType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().DocNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().PersonalNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().DocIssueDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().DocIssuer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().AddressDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().Summ)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => msg.First().Bank)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in msg)
+                {
+                    <tr class="@((bool)item.IsSend?"text-success":"")">
+                        <td>
+                            @if (item.zaprDoc != null)
+                            {
+                                @(item.zaprDoc.e_mailzapr?"Email":item.zaprDoc.HTTPZapr?"Http":item.zaprDoc.postzapr?"Письмо":"") @(item.zaprDoc.Name.Split(".").Count()>0?item.zaprDoc.Name.Split(".")[0]:"")
+                            }
+                        </td>
+                        <td>
+                            <div class="form-row">
+                                <a asp-action="addtransfer" asp-controller="family" asp-route-regId="@item.RegistrationId" asp-route-idMsg="@item.MsgId" class="m-1">Редактировать</a>
+                                <span onclick="copyTransfer('@item.MsgId')" class="m-1">Копировать</span>
+                                <span onclick="deleteTransfer('@item.MsgId')" class="m-1 text-danger">Удалить</span>
+                                <span onclick="sendOneRequest('@item.MsgId')" class="m-1">Отправить</span>
+                            </div>
+                        </td>
+                        <td>
+                            @if (item.zaprDoc!=null &&(item.zaprDoc.e_mailzapr || item.zaprDoc.postzapr))
+                            {
+                                <a target="_blank" href="~/returnFile/index?urlFile=@item.File">Файл</a>
+                            }
+                        </td>
+                        <td>
+                            @item.PayNo
+                        </td>
+                        <td>
+                            @item.LName
+                        </td>
+                        <td>
+                            @item.FName
+                        </td>
+                        <td>
+                            @item.MName
+                        </td>
+                        <td>
+                            @(item.DOB!=null?@item.DOB.Value.ToString("d"):"")
+                        </td>
+                        <td>
+                            @item.DocType
+                        </td>
+                        <td>
+                            @item.DocNo
+                        </td>
+                        <td>
+                            @item.PersonalNo
+                        </td>
+                        <td>
+                            @item.DocIssueDate
+                        </td>
+                        <td>
+                            @item.DocIssuer
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @(item.AddressDate==null?"":item.AddressDate.Value.ToString("d"))
+                        </td>
+                        <td>
+                            @item.Summ
+                        </td>
+                        <td>
+                            @item.Bank
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="15">
+                        Сумма итого
+                    </td>
+                    <td>
+                        @msg.Sum(x=>x.Summ)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+    else
+    {
+        <div class="alert alert-danger" role="alert">Нет запросов</div>
+    }
+}

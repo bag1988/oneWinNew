@@ -1,0 +1,11 @@
+﻿@model Guid
+@inject getList list
+<div class="form-group row pl-2">
+    @foreach (var d in await list.getAttachFile(Model))
+    {
+        <div class="p-1 m-1 border">
+            <a href="~/returnFile/index?urlFile=@d.urlFile" target="_blank">@d.nameFile</a>
+            <span class="pl-2 text-danger" onclick="deleteAttachFile('@d.id')">Удалить</span>
+        </div>
+    }
+</div>

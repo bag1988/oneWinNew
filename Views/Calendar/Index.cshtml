@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Календарь праздничных дней";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <div class="form-group row">
+        <label for="yearCalendar" class="col-form-label col-md-1">Год</label>
+        <div class="col-md-5">
+            <select id="yearCalendar" name="yearCalendar" class="form-control">
+                @for (int i = (DateTime.Now.Year - 2); i < (DateTime.Now.Year + 5); i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+        <label for="monthCalendar" class="col-form-label col-md-1">Месяц</label>
+        <div class="col-md-5">
+            <select id="monthCalendar" name="monthCalendar" class="form-control">
+                <option value="1">Январь</option>
+                <option value="2">Февраль</option>
+                <option value="3">Март</option>
+                <option value="4">Апрель</option>
+                <option value="5">Май</option>
+                <option value="6">Июнь</option>
+                <option value="7">Июль</option>
+                <option value="8">Август</option>
+                <option value="9">Сентябрь</option>
+                <option value="10">Октябрь</option>
+                <option value="11">Ноябрь</option>
+                <option value="12">Декабрь</option>
+            </select>
+        </div>
+    </div>    
+
+   
+
+    <div id="viewCurrentDay">
+    </div>
+</div>

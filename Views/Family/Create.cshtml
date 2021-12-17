@@ -1,0 +1,140 @@
+﻿@model familyModel
+
+@{
+    ViewData["Title"] = "Состав семьи. " + (Model.FamilyID == Guid.Empty ? "Добавить запись" : "Редактировать запись");
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<nav class="nav nav-pills nav-justified">
+    <a asp-action="edit" asp-controller="create" asp-route-regId="@Model.RegistrationID" class="nav-item nav-link">Заявитель</a>
+    <a asp-action="index" asp-controller="family" asp-route-regId="@Model.RegistrationID" class="nav-item nav-link active">Состав семьи</a>
+    <a asp-action="transfer" asp-controller="family" asp-route-regId="@Model.RegistrationID" class="nav-item nav-link">Запросы</a>
+    @* <a asp-action="sogl" asp-controller="family" asp-route-regId="@Model.RegistrationID" class="nav-item nav-link">Согласования</a>*@
+</nav>
+<hr />
+<div class="m-1">
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong> @ViewBag.message</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <form asp-action="create" asp-route-regId="@Model.RegistrationID" enctype="multipart/form-data">
+        <input type="hidden" asp-for="RegistrationID" />
+        <input type="hidden" asp-for="FamilyID" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="border-inset">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label asp-for="LName" class="col-form-label"></label>
+                    <input asp-for="LName" class="form-control text-capitalize" />
+                    <span asp-validation-for="LName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="FName" class="col-form-label"></label>
+                    <input asp-for="FName" class="form-control text-capitalize" />
+                    <span asp-validation-for="FName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="MName" class="col-form-label"></label>
+                    <input asp-for="MName" class="form-control text-capitalize" />
+                    <span asp-validation-for="MName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="DOB" class="col-form-label"></label>
+                    <input asp-for="DOB" class="form-control" />
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="NRotN" class="col-form-label"></label>
+                    <select asp-for="NRotN" class="form-control">
+                        <option></option>
+                        <option>Муж</option>
+                        <option>Жена</option>
+                        <option>Сын</option>
+                        <option>Дочь</option>
+                        <option>Опекаемыя(ый)</option>
+                    </select>
+                    <span asp-validation-for="NRotN" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-3">
+                    <label asp-for="City" class="col-form-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Address" class="col-form-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Home" class="col-form-label"></label>
+                    <input asp-for="Home" class="form-control" />
+                    <span asp-validation-for="Home" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Flat" class="col-form-label"></label>
+                    <input asp-for="Flat" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="AddressDate" class="col-form-label"></label>
+                    <input asp-for="AddressDate" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-3">
+                    <label asp-for="PassportNo" class="col-form-label"></label>
+                    <input asp-for="PassportNo" class="form-control text-uppercase" />
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="PersonalNo" class="col-form-label"></label>
+                    <input asp-for="PersonalNo" class="form-control text-uppercase" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="PassIssuerDate" class="col-form-label"></label>
+                    <input asp-for="PassIssuerDate" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="PassIssuer" class="col-form-label"></label>
+                    <input asp-for="PassIssuer" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @*<a class="btn btn-link" asp-action="Index" asp-controller="family" asp-route-regId="@Model.RegistrationID">Назад</a>*@
+        </div>
+    </form>
+
+</div>
+<hr />
+<div name="loadFamily">
+    <partial name="loadFamily" model="@Model.RegistrationID"></partial>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script src="~/js/create.js" asp-append-version="true"></script>

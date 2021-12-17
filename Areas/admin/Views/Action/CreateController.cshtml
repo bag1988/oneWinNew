@@ -1,0 +1,31 @@
+﻿@model controlerModel
+@{
+    ViewData["Title"] = "Новый контроллер";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+<nav class="nav nav-pills nav-justified">
+            <a asp-area="admin" asp-controller="action" asp-action="index" class="nav-item nav-link">Действия</a>
+            <a asp-area="admin" asp-controller="action" asp-action="controller" class="nav-item nav-link">Контроллеры</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateAction" class="nav-item nav-link">Добавить действие</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateController" class="nav-item nav-link active">Добавить контроллер</a>
+        </nav>        
+        <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <form asp-action="CreateController" asp-area="admin" method="post">
+        <input type="hidden" asp-for="id" />
+        <div class="form-group">
+            <label asp-for="nameController"></label>
+            <input asp-for="nameController" class="form-control" />
+            <span asp-validation-for="nameController" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="addressController"></label>
+            <input asp-for="addressController" class="form-control" />
+            <span asp-validation-for="addressController" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+        <a class="btn btn-sm" asp-area="admin" asp-controller="action" asp-action="controller">Отмена</a>
+    </form>
+</div>

@@ -1,0 +1,195 @@
+@model oneWin.Models.baseModel.docRegModel
+@inject getList list
+@{
+    ViewData["Title"] = @Context.Request.Query["idDoc"].ToString() != "" ? "Редактировать административныю процедуру" : "Добавить административныю процедуру";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" asp-route-legal="false" class="nav-item nav-link">Только для физических лиц</a>
+        <a asp-action="index" asp-route-legal="true" class="nav-item nav-link">Только для юридических лиц</a>
+        <a asp-action="create" class="nav-item nav-link active">Добавить</a>
+
+    </nav>
+    <hr />
+   
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model!=null&&Model.RegID != Guid.Empty)
+        {
+            <input asp-for="RegID" type="hidden" class="form-control" />
+        }
+        <div class="form-group row">
+            <label asp-for="HeadsID" class="col-md-2 col-form-label"></label>
+            <div class="col-md-4">
+                <select asp-for="HeadsID" class="form-control" asp-items="@(await list.headsList())"></select>
+                <span asp-validation-for="HeadsID" class="text-danger"></span>
+            </div>
+            <label asp-for="SectionID" class="col-md-1 col-form-label"></label>
+            <div class="col-md-5">
+                <select asp-for="SectionID" class="form-control" asp-items="@(await list.sectList((Model!=null?Model.HeadsID.ToString():(await list.headsList()).ElementAt(0).Value)))"></select>
+                <span asp-validation-for="SectionID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ViewSiteSections" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select style="background-color: #FAD9D7" asp-for="ViewSiteSections" class="form-control" asp-items="@(await list.listingList())"></select>
+                <span asp-validation-for="ViewSiteSections" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="RegName" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="RegName" class="form-control" />
+                <span asp-validation-for="RegName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-check form-check-inline col-md-2" style="margin-right:0px;">
+                <label style="padding-left:15px;" class="form-check-label">
+                    <input class="form-check-input" asp-for="GP" />  @Html.DisplayNameFor(model => model.GP)
+                </label>
+            </div>
+            <label asp-for="NameGP" class="col-md-2 col-form-label"></label>
+            <div class="col-md-8">
+                <input asp-for="NameGP" class="form-control" />
+                <span asp-validation-for="NameGP" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="IssueTerms" class="col-md-2 col-form-label"></label>
+            <div class="col-md-2">
+                <input asp-for="IssueTerms" class="form-control" />
+                <span asp-validation-for="IssueTerms" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <select asp-for="TypeIssue" class="form-control" asp-items="@(await list.TypeIssueList())"></select>
+                <span asp-validation-for="TypeIssue" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <select asp-for="Issue" class="form-control" asp-items="@(await list.isssueList())"></select>
+                <span asp-validation-for="Issue" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <input asp-for="IssueZapr" class="form-control" />
+                <span asp-validation-for="IssueZapr" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <select asp-for="TypeIssueZapr" class="form-control" asp-items="@(await list.TypeIssueList())"></select>
+                <span asp-validation-for="TypeIssueZapr" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ViewSiteInssue" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select style="background-color: #FAD9D7" asp-for="ViewSiteInssue" class="form-control" asp-items="@(await list.siteInssueList())"></select>
+                <span asp-validation-for="ViewSiteInssue" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Number" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Num" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Num" class="form-control" />
+                <span asp-validation-for="Num" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Cost" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ViewSiteCost" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select style="background-color: #FAD9D7" asp-for="ViewSiteCost" class="form-control" asp-items="@(await list.costList())"></select>
+                <span asp-validation-for="ViewSiteCost" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Validaty" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Validaty" class="form-control" />
+                <span asp-validation-for="Validaty" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ViewSiteValidaty" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select style="background-color: #FAD9D7" asp-for="ViewSiteValidaty" class="form-control" asp-items="@(await list.validatyList())"></select>
+                <span asp-validation-for="ViewSiteValidaty" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="URL" class="col-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="URL" class="form-control" />
+                 @if (Model != null && Model.RegID != Guid.Empty && Model.URL != null)
+                {
+                    <a href="~/returnFile/index?urlFile=TemplateZayav/@Model.URL">@Model.URL</a>
+                }
+                <span asp-validation-for="URL" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <input name="fileUrl" type="file" class="form-control-file" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="URLSite" class="col-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input style="background-color: #FAD9D7" asp-for="URLSite" class="form-control" />
+                 @if (Model != null && Model.RegID != Guid.Empty && Model.URLSite != null)
+                {
+                    <a href="~/returnFile/index?urlFile=TemplateZayav/Site/@Model.URLSite">@Model.URLSite</a>
+                }
+                <span asp-validation-for="URLSite" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <input name="fileUrlSite" type="file" class="form-control-file" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="IP" /> @Html.DisplayNameFor(model => model.IP)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="Regulation740" /> @Html.DisplayNameFor(model => model.Regulation740)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-2">
+                <label class="form-check-label" style="padding-left:15px;">
+                    <input class="form-check-input" asp-for="ViewSite" /> @Html.DisplayNameFor(model => model.ViewSite)
+                </label>
+            </div>
+            <div class="form-check-inline col-md-3">
+               <label class="form-check-label" style="padding-left:15px;">
+                <input class="form-check-input" asp-for="Selected" /> @Html.DisplayNameFor(model => model.Selected)
+            </label>
+            </div>
+        </div>
+
+        <div class="form-group row"  style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a class="btn btn-link" asp-action="Index">Назад к списку</a>
+        </div>
+    </form>
+    
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

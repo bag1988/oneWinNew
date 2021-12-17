@@ -1,0 +1,156 @@
+﻿@using System.ComponentModel
+@using oneWin.Models.baseModel
+@model IndexViewModel
+@addTagHelper *, oneWin
+
+<div class="row NoPrintDisplay">
+    @{
+        string nameSort = "Дата обращения";
+        string sortDesc = "убыванию";
+        var s = "GettingDate";
+        if (Model.Search == null)
+            Model.Search = new();
+        if (Model.reg.Count() > 0 && Model.Search != null)
+        {
+            if (Model.Search.sortTable != null)
+            {
+                s = Model.Search.sortTable;
+                nameSort = s == "sol" ? "Решение" : Model.reg.First().GetType().GetProperties().First(x => x.Name == s).GetCustomAttributes(typeof(DisplayNameAttribute), true).Cast<DisplayNameAttribute>().Single().DisplayName;
+            }
+            if (Model.Search.sortDesc != null)
+                sortDesc = (bool)Model.Search.sortDesc ? "возрастанию" : "убыванию";
+        }
+
+        List<string> nameColumn = new();
+        if (Context.Request.Cookies.ContainsKey("columnViewTable"))
+            nameColumn = Context.Request.Cookies["columnViewTable"].Split("&").ToList();
+        else
+        {
+            nameColumn = new() { "DocNo", "LName", "OrgName", "PhoneNo", "Address", "GettingDate", "OutDeptDate", "ReturnInDeptDate", "NotificationDate", "IssueDate", "MustBeReady", "PerformerName", "Number", "Registrator", "Solution" };
+        }
+
+        if (Model.Search != null && (new int[] { 1, 4, 7 }).Contains(Model.Search.typePerson == null ? 0 : (int)Model.Search.typePerson))
+        {
+            nameColumn.Remove("OrgName");
+        }
+
+    }
+    <page-link page-model="@Model.PageViewModel" page-action="Index" class="col-md-6"></page-link>
+    <div class="col-md-4 text-center"><span class="col-form-label">Найдено:<font style="color:#4c4c4c"> @Model.PageViewModel.CountStatment</font><br />Сортировка по столбцу:<font style="color:#4c4c4c"> @nameSort по @sortDesc</font></span> </div>
+    <div class="col-md-2 text-right  mb-2">
+        <span onclick="setColumnTable()" class="btn btn-outline-primary">Настройка столбцов</span>
+    </div>
+</div>
+<div name="loadingTableView" style="display:none;" class="align-items-center  m-3">
+    <strong>Загрузка данных...</strong>
+    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+</div>
+
+
+<form method="get" asp-action="Index">
+    <table name="viewTableHome" class="table table-sm table-bordered table-striped">
+        <thead class="thead-green">
+            <query model-page="@(Model.Search??new searchFastModel())"></query>
+            <tr>
+                <th class="NoPrintDisplay">
+                    <button type="submit" value="search" class="btn btn-primary btn-sm" style="display:none;">Поиск</button>
+                    <a title="Очистить форму" class="btn btn-info" role="button" asp-action="index" asp-route-page="0">&times;</a>
+                </th>
+                <th class="NoPrintDisplay">
+                    <input id="selectAllCheck" type="checkbox" />
+                </th>
+                @foreach (var n in nameColumn)
+                {
+                    if (new regModel().GetType().GetProperties().Any(x => x.Name == n))
+                    {
+                        if (Model.Search.GetType().GetProperties().Any(x => x.Name == n + "Filter"))
+                        {
+                            var obj = Model.Search.GetType().GetProperty(n + "Filter");
+                            string classTh = "", typeInput = "";
+                            classTh = (n == "DocNo" || n == "Number"||n.Contains("Date") || n == "MustBeReady") ? "th80" : n == "Address" ? "th250" : "";
+                            typeInput = n.Contains("Date") || n == "MustBeReady" ? "date" : n == "DocNo" ? "number" : "text";
+
+                            <th data-col="@n" class="@classTh">
+                                <a asp-action="index" class="@(s==n? "text-danger":"")" asp-route-sortTable="@n">@(new regModel().GetType().GetProperties().First(x => x.Name == n).GetCustomAttributes(typeof(DisplayNameAttribute), true).Cast<DisplayNameAttribute>().Single().DisplayName)</a>
+
+                                @*<button type="button" data-html="true" data-toggle="popover" data-content="@("<input type='"+typeInput+"' class='form-control form-control-sm NoPrintDisplay' name='"+(n+"Filter")+"' id='"+(n+"Filter")+"' value='"+(Model.Search!=null? (n.Contains("Date") || n == "MustBeReady")&&obj.GetValue(Model.Search)!=null ? Convert.ToDateTime(obj.GetValue(Model.Search)).ToString("yyyy-MM-dd") : obj.GetValue(Model.Search):"")+"' />")">@(Model.Search!=null? (n.Contains("Date") || n == "MustBeReady")&&obj.GetValue(Model.Search)!=null ? Convert.ToDateTime(obj.GetValue(Model.Search)).ToString("yyyy-MM-dd") : obj.GetValue(Model.Search):"Нет данных")</button>*@
+                                <div>
+                                    <input type="@typeInput" class="form-control form-control-sm NoPrintDisplay" name="@(n+"Filter")" id="@(n+"Filter")" value="@(Model.Search!=null? (n.Contains("Date") || n == "MustBeReady")&&obj.GetValue(Model.Search)!=null ? Convert.ToDateTime(obj.GetValue(Model.Search)).ToString("yyyy-MM-dd") : obj.GetValue(Model.Search):"")" />
+                                </div>
+                            </th>
+                        }
+                    }
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.reg.Any())
+            {
+                @foreach (var item in Model.reg)
+                {
+                    <tr class="@(item.Deleted==true?"tr-danger":"")">
+                        <td class="NoPrintDisplay">
+                            <div class="Process @(item.State==1?"Accept":item.State==2?"Send":item.State==3?"Get":item.State==4?"Insert":"")"></div>
+                        </td>
+                        <td class="NoPrintDisplay">
+                            <input type="checkbox" data-id="@item.RegistrationID" />
+                        </td>
+
+                        @foreach (var n in nameColumn)
+                        {                            
+                            var valueObj = item.GetType().GetProperty(n)!=null? item.GetType().GetProperty(n).GetValue(item):null;
+                            string classTh = "";
+                            if (n == "MustBeReady")
+                            {
+                                if (item.stop != null)
+                                {
+                                    classTh = "colorDateRed";
+                                    valueObj = "Приостан. "+  item.stop;
+                                }
+                                else
+                                {
+                                    classTh = ((item.State <= 2 && item.MustBeReady != null) ? item.MustBeReady.Value.AddDays(-3) <= DateTime.Now ? item.MustBeReady.Value <= DateTime.Now ? "colorDateRed" : "colorDateOr" : "" : "");
+                                    valueObj = Convert.ToDateTime(valueObj).ToShortDateString();
+                                }
+                            }
+                            <td data-col="@n" class="@classTh">
+                                @if (n == "Number")
+                                {
+                                    <a style="cursor:pointer;" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="@valueObj" data-content="@item.RegName">@valueObj</a>
+                                }
+                                else if (n == "DocNo")
+                                {
+                                    <a data-toggle="tooltip" title="Редактировать" asp-action="edit" asp-controller="create" asp-area="" asp-route-regId="@item.RegistrationID">@(valueObj==null?"нет номера": valueObj)</a>
+                                }
+                                else if (n == "LName")
+                                {
+                                    <a data-toggle="tooltip" title="Копировать" asp-action="index" asp-controller="create" asp-area="" asp-route-regId="@item.RegistrationID">@valueObj</a>
+                                }
+                                else if (n == "GettingDate")
+                                {
+                                    @(((DateTime)valueObj).ToString("d")) <font style="color:#4c4c4c;">@(((DateTime)valueObj).ToString("t"))</font>
+                                }
+                                else
+                                {
+                                    @valueObj
+                                }
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="17"><div class="alert alert-danger" role="alert">Нет данных для отображения! Проверьте условия поиска и фильтра!</div></td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</form>
+<page-link page-model="@Model.PageViewModel" page-action="Index" class="col-md-6"></page-link>

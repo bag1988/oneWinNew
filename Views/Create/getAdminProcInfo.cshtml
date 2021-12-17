@@ -1,0 +1,33 @@
+﻿@model docRegModel
+@inject getList list
+
+@if (Model != null)
+{
+    <div class="form-group row">
+           
+        <div class="col-md-12">
+            <label asp-for="RegName" class="col-form-label"></label> 
+            <div>
+            <label class="form-control disabledSpan">@Model.Number @Model.RegName</label>
+            </div>
+            <input type="hidden" asp-for="Number" />
+            <input type="hidden" asp-for="RegName" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        
+        <div class="col-md-4">
+            <label class="col-form-label">Стоимость</label>
+            <label class="form-control disabledSpan"><b>@Model.Cost</b></label>
+        </div>        
+        <div class="col-md-4">
+            <label class="col-form-label">Срок действия</label>
+            <label class="form-control disabledSpan"><b>@Model.Validaty</b></label>
+        </div>
+        <div class="col-md-4">
+            <label for="Organiz" class="col-form-label">Исполнитель</label>
+            <select name="Organiz" class="form-control" asp-items="@(await list.performerForDoc(Model.RegID, ViewData["organiz"]))"></select>
+        </div>
+    </div>    
+}

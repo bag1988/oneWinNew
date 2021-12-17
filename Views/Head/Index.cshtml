@@ -1,0 +1,87 @@
+﻿@model IEnumerable<headModel>
+@{
+    ViewData["Title"] = "Справочник глав и разделов";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-6">
+
+        <nav class="nav nav-pills nav-justified">
+            <a asp-action="index" asp-route-legal="false" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link @(Context.Request.Query["legal"]=="false"?"active":"")">Только для физических лиц</a>
+            <a asp-action="index" asp-route-legal="true" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link @(Context.Request.Query["legal"]=="true"?"active":"")">Только для юридических лиц</a>
+           <a asp-action="index" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link @(!Context.Request.Query.ContainsKey("legal")?"active":"")">Нераспределенные</a>
+            
+            <a asp-action="create" class="nav-item nav-link">Добавить</a>
+        </nav>
+        <hr />
+        <form asp-action="index" method="get">
+            <div class="form-group row">
+                <label for="searchName" class="col-form-label col-md-3">Наименование</label>
+                <div class="col-md-4">
+                    <input id="searchName" name="searchName" value="@Context.Request.Query["searchName"]" class="form-control" />
+                </div>
+                <div class="col-md-5">
+                    <input type="submit" value="Поиск" class="btn btn-primary" />
+                    <a asp-action="index" class="btn btn-light">Очистить поиск</a>
+                </div>
+            </div>
+        </form>
+        <hr />
+        @if (Model != null)
+        {
+            <div class="viewDoc" data-controller="@ViewContext.RouteData.Values["Controller"].ToString()">
+                @foreach (headModel doc in Model)
+                {                    
+                    <div>
+                        <span data-doc="@doc.HedID">@doc.Number @doc.Name</span>
+                       
+                            <div style="display:none;" name="actionMenu">
+                                <span onclick="addSection('@doc.HedID')">Добавить раздел</span>
+                                <a asp-action="create" asp-route-idDoc="@doc.HedID">Редактировать</a>
+                                <a class="text-danger" asp-action="delete" asp-route-idDoc="@doc.HedID">Удалить</a>
+                            </div>
+                        
+                    </div>
+                }
+            </div>
+        }
+        <hr />
+
+    </div>
+    <div class="col-md-6" id="viewPartial">
+    </div>
+</div>
+
+<div class="modal fade" id="addSectionForHead" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:1000px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление раздела</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4></h4>
+                <input name="idHead" type="hidden" class="form-control" />
+                <input name="idSection" type="hidden" class="form-control" />
+                <div class="form-group row">
+                    <label for="nameSection" class="col-md-2 col-form-label">Название раздела</label>
+                    <div class="col-md-10">
+                        <textarea name="nameSection" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="numberSection" class="col-md-2 col-form-label">Номер раздела</label>
+                    <div class="col-md-10">
+                        <input name="numberSection" type="number" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveButton" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

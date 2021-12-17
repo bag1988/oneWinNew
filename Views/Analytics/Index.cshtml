@@ -1,0 +1,114 @@
+﻿@using oneWin.Service
+@{
+    ViewData["Title"] = "Аналитика";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <div class="form-group row">
+        <label for="startDate" class="col-md-2 col-form-label">Дата с:</label>
+        <div class="col-md-4">
+            <input name="startDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <label for="endDate" class="col-md-2 col-form-label">Дата по:</label>
+        <div class="col-md-4">
+            <input name="endDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#colhour" role="tab" aria-selected="true">Количество принятых заявлений в час</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#chapter" role="tab" aria-selected="false">Аналитика по главам</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#decision" role="tab" aria-selected="false">Аналитика по решениям</a>
+        </li>
+    </ul>
+    <br />
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="colhour" role="tabpanel">
+            <h5>Количество принятых заявлений в час</h5>
+            <div class="form-group row">
+                <label class="col-form-label col-md-2" for="ProcedureName">Процедура</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" name="ProcedureName" id="ProcedureName" />
+                </div>
+                <label class="col-form-label col-md-2" for="RegistratorName">Регистратор</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" name="RegistratorName" id="RegistratorName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="getAnalytics('AnalyticsColHour')" class="btn btn-primary">Сформировать отчет</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="chapter" role="tabpanel">
+            <h5>Аналитика по главам</h5>
+            <div class="form-group row">
+                <label class="col-form-label col-md-2" for="DateList">Выборка по дате:</label>
+                <div class="col-md-4">
+                    <select name="DateList" id="DateList" class="form-control">
+                        <option value="1">принятого решения</option>
+                        <option value="0">поданных заявлений</option>
+                    </select>
+                </div>
+                <label class="col-form-label col-md-2" for="Person">Физ-Юр лицо</label>
+                <div class="col-md-4">
+                    <select name="Person" id="Person" class="form-control">
+                        <option value="2">Все</option>
+                        <option value="0">Физ.лицам</option>
+                        <option value="1">Юр.лица</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-2" for="Chapter">Глава</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" name="Chapter" id="Chapter" />
+                </div>
+                <label class="col-form-label col-md-2" for="ListQuestion">По админ. процедурам и дополнительным вопросам</label>
+                <div class="col-md-4">
+                    <select name="ListQuestion" id="ListQuestion" class="form-control">
+                        <option value="2">Все</option>
+                        <option value="0">По админ. процедурам</option>
+                        <option value="1">Дополнительным вопросам</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label" for="radioOfSolutionType1">
+                    Формирование отчета по:
+                </label>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioOfDocTime" id="radioOfDocTime1" value="0" checked>
+                    <label class="form-check-label" for="radioOfDocTime1">
+                        По дням
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioOfDocTime" id="radioOfDocTime2" value="1">
+                    <label class="form-check-label" for="radioOfDocTime2">
+                        По месяцам
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioOfDocTime" id="radioOfDocTime3" value="2">
+                    <label class="form-check-label" for="radioOfDocTime3">
+                        По годам
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="getAnalytics('AnalyticsChapter')" class="btn btn-primary">Сформировать отчет</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="decision" role="tabpanel">
+            <h5>Аналитика по решениям</h5>
+            <div class="form-group">
+                <button type="button" onclick="getAnalytics('AnalyticsDecision')" class="btn btn-primary">Сформировать отчет</button>
+            </div>
+        </div>
+    </div>
+</div>

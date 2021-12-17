@@ -1,0 +1,75 @@
+﻿@model loadGPModel
+@{
+    ViewData["Title"] = "Загрузка из отдела ЖП";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" class="nav-item nav-link">Настройки</a>
+        <a asp-action="loadGP" class="nav-item nav-link active">Загрузка из отдела ЖП</a>
+        @*<a asp-action="index" class="nav-item nav-link">Загрузить дома</a>*@
+        <a asp-action="sendGP" class="nav-item nav-link">Выгрузка данных</a>
+    </nav>
+    <hr />
+    @if(ViewBag.message!=null)
+    {
+        <div class="alert alert-primary" role="alert">
+            @foreach(var m in ViewBag.message.Split("\n"))
+            {
+                @m 
+                <br>
+            }
+        </div>
+    }
+    <form asp-action="loadGP" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="ReturnInDeptDate" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ReturnInDeptDate" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="IssueDate" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="IssueDate" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="EvaluationNotification" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select asp-for="EvaluationNotification" class="form-control">
+                    <option>По почте</option>
+                    <option>Выдано на руки</option>
+                    <option>В виде электронного документа</option>
+                    <option>Курьером</option>
+                    <option>Иным способом</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="StartDateLoad" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="StartDateLoad" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="EndDateLoad" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="EndDateLoad" class="form-control" />
+            </div>
+        </div>
+
+
+        <div class="form-group row" style="padding-left:15px;">
+            <input type="submit" value="Загрузить" class="btn btn-primary" />
+        </div>
+    </form>
+
+
+
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

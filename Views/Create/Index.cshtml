@@ -1,0 +1,246 @@
+﻿@model createStatement
+@inject getList list
+@{
+    ViewData["Title"] = "Регистрация нового обращения";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+
+<form asp-action="index" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-xl-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="border-inset">
+                <h5>Заявление</h5>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="TypeReg" class="col-form-label"></label>
+                        <select asp-for="TypeReg" class="form-control"
+                                asp-items="@(new SelectList(dictionaryList.typeReg ,"Key","Value"))"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="StatementForm" class="col-form-label"></label>
+                        <select asp-for="StatementForm" class="form-control">
+                            <option>Письменно</option>
+                            <option>Устно</option>
+                            <option>По почте</option>
+                            <option>По телефону</option>
+                            <option>Через интернет</option>
+                            <option>Курьером</option>
+                        </select>
+                        <span asp-validation-for="StatementForm" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="col-form-label">Использовать ID-карту</label>
+                        <div>
+                            @if (Context
+                            .Request.Query.ContainsKey("codeVerifier"))
+                            {
+                                <a asp-action="logout" asp-controller="create" class="btn btn-outline-success">
+                                    Завершить
+                                    сессию
+                                </a>
+                            }
+                            else
+                            {
+                                <span onclick="loginEsiful()" class="btn btn-outline-success">ЕСИФУЛ ID-карта</span>
+                            }
+                            <span onclick="bauth()" class="btn btn-outline-success">Считать с ID-карты</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-form-label">Процедура</label>
+                        <span onclick="viewAdminProc()" class="text-white btn btn-success">Выбор процедуры</span>
+                        <span asp-validation-for="RegID" class="text-danger"></span>
+                        <input type="hidden" name="RegID" value="@((Model!=null&&Model.RegID!=null)?Model.RegID:"")" />
+                    </div>
+                </div>
+
+                <div name="getAdminProc">
+                    @if (Model != null && Model.RegID != null)
+                    {
+                        <partial name="getAdminProcInfo" model="@Model.DocRegistry" view-data="@(new ViewDataDictionary(ViewData) {  { "organiz", ((Model!=null&&Model.Organiz!=null)?Model.Organiz:"") } })"></partial>
+                    }
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-md-2">
+                        <label asp-for="KolList" class="col-form-label"></label>
+                        <input asp-for="KolList" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="KolListPril" class="col-form-label"></label>
+                        <input asp-for="KolListPril" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="border-inset">
+                <h5>Заявитель</h5>
+                <div class="form-group row" style="display:none;">
+                    <div class="col-md-12">
+                        <label asp-for="OrgName" class="col-form-label"></label>
+                        <input asp-for="OrgName" class="form-control bg-req" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label asp-for="LName" class="col-form-label"></label>
+                        <input asp-for="LName" class="form-control bg-req text-capitalize" />
+                        <span asp-validation-for="LName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="FName" class="col-form-label"></label>
+                        <input asp-for="FName" class="form-control bg-req text-capitalize" />
+                        <span asp-validation-for="FName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="MName" class="col-form-label"></label>
+                        <input asp-for="MName" class="form-control text-capitalize" />
+                        <span asp-validation-for="MName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="PhoneNo" class="col-form-label"></label>
+                        <input asp-for="PhoneNo" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="MobPhone" class="col-form-label"></label>
+                        <input asp-for="MobPhone" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="e_mail" class="col-form-label"></label>
+                        <input asp-for="e_mail" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label asp-for="PassportNo" class="col-form-label"></label>
+                        <input asp-for="PassportNo" class="form-control text-uppercase" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="PersonalNo" class="col-form-label"></label>
+                        <input asp-for="PersonalNo" class="form-control text-uppercase" />
+                        <span asp-validation-for="PersonalNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="PassIssuerDate" class="col-form-label"></label>
+                        <input type="date" asp-for="PassIssuerDate" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="PassIssuer" class="col-form-label"></label>
+                        <input asp-for="PassIssuer" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label asp-for="City" class="col-form-label"></label>
+                        <input asp-for="City" value="@(Model.City==null?"г.Минск":Model.City)" class="form-control bg-req" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Address" class="col-form-label"></label>
+                        <input asp-for="Address" class="form-control bg-req" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="Home" class="col-form-label"></label>
+                        <input asp-for="Home" class="form-control bg-req" />
+                        <span asp-validation-for="Home" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="Flat" class="col-form-label"></label>
+                        <input asp-for="Flat" class="form-control" />
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(ViewBag.FullAdress))
+                {
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Проверьте адрес</label>
+                            <label class="form-control disabledSpan">@ViewBag.FullAdress</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="border-inset">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label for="fileUrl" class="col-form-label">Прикрепить файлы</label>
+                        <input name="fileUrl" multiple type="file" class="form-control-file" />
+                    </div>
+                </div>
+            </div>
+            <div class="border-inset">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label asp-for="Notes" class="col-form-label"></label>
+                        <textarea asp-for="Notes" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group row">
+                    <label for="NameDocDop" class="col-md-12 col-form-label">Документы</label>
+                    <div class="col-md-12" name="NameDocDopList">
+
+                        @if (Model != null && Model.RegID != null)
+                        {
+                            <partial name="getDocForProc"
+                                 model="@(new docZapr{regId= (Guid)Model.RegID, selectList=Model.NameDocDop})"></partial>
+                        }
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label asp-for="NameDoc_Dop" class="col-form-label"></label>
+                        <textarea asp-for="NameDoc_Dop" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group row">
+                    <label for="NameZpDop" class="col-md-12 col-form-label">Запрашиваемые документы  <label><input type="checkbox" asp-for="extendSrok"> Увеличить срок</label></label>
+
+                    <div class="col-md-12" name="NameZpDopList">
+
+                        @if (Model != null && Model.RegID != null)
+                        {
+                            <partial name="getZaprForProc"
+                                 model="@(new docZapr{regId= (Guid)Model.RegID, selectList=Model.NameZpDop})"></partial>
+                        }
+
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label asp-for="NameZp_Dop" class="col-form-label"></label>
+                        <textarea asp-for="NameZp_Dop" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottomFixed">
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script src="~/js/create.js" asp-append-version="true"></script>

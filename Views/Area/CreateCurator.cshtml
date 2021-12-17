@@ -1,0 +1,90 @@
+﻿@model curatorModel
+@inject getList list
+@{
+    ViewData["Title"] = @Context.Request.Query["idCurator"].ToString() != "" ? "Редактировать куратора" : "Добавить куратора";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <partial name="navList" />
+    <hr />
+
+    <form asp-action="CreateCurator" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model != null && Model.Id != Guid.Empty)
+        {
+            <input asp-for="Id" type="hidden" class="form-control" />
+        }
+        <div class="form-group row">
+            <label asp-for="Area_Id" class="col-md-2 col-form-label">Район</label>
+            <div class="col-md-10">
+                <select asp-for="Area_Id" class="form-control" asp-items="@(await list.areaList())"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="FIO" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FIO" class="form-control" />
+                <span asp-validation-for="FIO" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Title" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Address" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Cabinet" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Cabinet" class="form-control" />
+                <span asp-validation-for="Cabinet" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Phone" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="e_mail" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="e_mail" class="form-control" />
+                <span asp-validation-for="e_mail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Number" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Notes" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Notes" class="form-control"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row" style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a class="btn btn-link" asp-action="Index">Назад к списку</a>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

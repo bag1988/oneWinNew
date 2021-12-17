@@ -1,0 +1,26 @@
+﻿@model List<sectionsModel>
+
+<h4>Разделы</h4>
+
+
+ @if (Model != null)
+{
+    <div class="guideList">
+        @foreach (var sec in Model)
+        {
+            <div>
+                <span data-number="@sec.Number" data-doc="@sec.SectionID">@sec.Number @sec.Name</span>
+               
+                    <div style="display:none;" name="actionMenu">
+                        <span onclick="addSection('@ViewBag.idDoc', '@sec.SectionID')">Редактировать</span>
+                        
+                            <span onclick="deleteSection('@sec.SectionID')" class="text-danger">Удалить</span>
+                            <span data-del="@sec.SectionID" style="display:none;" class="text-danger">Подтверждаю удаление</span>
+                       
+                    </div>
+              
+            </div>
+
+        }
+    </div>
+}

@@ -1,0 +1,102 @@
+﻿@model infoFlatModel
+@inject getList list
+@{
+    ViewData["Title"] = "Состав семьи";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+
+<nav class="nav nav-pills nav-justified">
+    <a asp-action="edit" asp-controller="create" asp-route-regId="@Model.Registration_Id"
+        class="nav-item nav-link">Заявитель</a>
+    <a asp-action="index" asp-controller="family" asp-route-regId="@Model.Registration_Id"
+        class="nav-item nav-link active">Состав семьи</a>
+    <a asp-action="transfer" asp-controller="family" asp-route-regId="@Model.Registration_Id"
+        class="nav-item nav-link">Запросы</a>
+    @* <a asp-action="sogl" asp-controller="family" asp-route-regId="@Model.Registration_Id" class="nav-item
+        nav-link">Согласования</a>*@
+</nav>
+<hr />
+
+<div class="m-1">
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong> @ViewBag.message</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <form asp-action="index" asp-route-regId="@Model.Registration_Id" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Registration_Id" />
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Pravo" class="col-form-label"></label>
+                <select asp-for="Pravo" class="form-control">
+                    <option>Квартиросъемщик</option>
+                    <option>Собственник</option>
+                    <option>Служебная помощь</option>
+                    <option>площадь родителей</option>
+                    <option>Поднаниматель</option>
+                    <option>Общежитие</option>
+                    <option>Наниматель</option>
+                    <option>Член семьи</option>
+                    <option>Договор аренды</option>
+                    <option>Срочный договор найма</option>
+                    <option>Собственник доли</option>
+                    <option>Прописка к административному зданию</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="totalArea" class="col-form-label"></label>
+                <input type="number" asp-for="totalArea" class="form-control" />
+                <span asp-validation-for="totalArea" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="livingSpace" class="col-form-label"></label>
+                <input type="number" asp-for="livingSpace" class="form-control" />
+                <span asp-validation-for="livingSpace" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="personNumber" class="col-form-label"></label>
+                <input asp-for="personNumber" class="form-control" />
+                <span asp-validation-for="personNumber" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="roomNumber" class="col-form-label"></label>
+                <input asp-for="roomNumber" class="form-control" />
+                <span asp-validation-for="roomNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <label class="col-form-label">Действие</label>
+                <div>
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="form-group">
+    <a asp-action="create" asp-controller="family" asp-route-regId="@Model.Registration_Id"
+        class="btn btn-primary mb-1">Добавить запись</a>
+    <button type="button" onclick="TransferInRequest()" class="btn btn-outline-primary mb-1">Перенос в запросы</button>
+</div>
+<hr />
+<div name="loadFamily">
+    <partial name="loadFamily" model="@Model.Registration_Id"></partial>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script src="~/js/create.js" asp-append-version="true"></script>

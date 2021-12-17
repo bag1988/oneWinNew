@@ -1,0 +1,66 @@
+﻿@using oneWin.Models
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Главная";
+}
+@if(Model!=null)
+{
+<div class="NoPrintDisplay">
+<nav class="nav nav-green">
+    <a class="nav-link" asp-action="index"  accesskey="2" asp-controller="create">Добавить запись</a>
+    <span onclick="sendToOtdel()" accesskey="3" class="nav-link">Передать в отдел</span>
+    <span onclick="returnFromDept()" accesskey="4" class="nav-link">Вернуть из отдела</span>
+    <span onclick="returnFromDeptAndIssuance()" accesskey="5" class="nav-link">Вернуть из отдела и выдать заявителю</span>
+    <span onclick="issuanceApplicant()" accesskey="6" class="nav-link">Выдать заявителю</span>
+    <span onclick="returnToReceived()" accesskey="7" class="nav-link">Вернуть в поступившие</span>
+    <span onclick="stopStatement()" class="nav-link">Приостановить</span>
+    <span onclick="resumeStatement()" class="nav-link">Возобновить</span>
+    <span onclick="sendNotification()" class="nav-link">Направить уведомление</span>
+    <span onclick="searchRequest()" class="nav-link">Поиск по запросам</span>
+    <span onclick="print()" class="nav-link">Печать</span>
+    <span onclick="reportForPeriod('report')" class="nav-link">Отчет</span>
+    <span onclick="reportForPeriod('reportSrok')" class="nav-link">Отчет о нарушении срока готовности</span>
+    <span onclick="reportForPeriod('reportToDate')" class="nav-link">Отчет о приближении срока готовности</span>
+   
+        <span onclick="deleteStatement()" accesskey="9" class="nav-link nav-red">Удалить</span>
+</nav>
+
+
+<p class="alert alert-info box-shadow-insert">
+ 
+@foreach(var d in dictionaryList.typeReg)
+    {
+       <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.typePerson.ToString()==d.Key?"active":"":"")"
+       accesskey=@(d.Key=="1"? "ц":d.Key=="2"?"у":d.Key=="3"?"г":d.Key=="4"?"ш":d.Key=="5"?"щ":"")
+            asp-action="index" asp-route-typePerson="@d.Key">@d.Value</a>
+    }  
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?(Model.Search.typePerson==0||Model.Search.typePerson==null)?"active":"":"active")" asp-action="index" asp-route-typePerson="0">Все</a>
+</p>
+<p>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.stateStatment==1?"active":"":"")" asp-action="index" accesskey="ы" asp-route-stateStatment="1">Поступившие документы</a>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.stateStatment==2?"active":"":"")" asp-action="index" accesskey="в" asp-route-stateStatment="2">Переданные в отделы</a>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.stateStatment==3?"active":"":"")" asp-action="index" accesskey="п" asp-route-stateStatment="3">Возвращенные из отделов</a>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.stateStatment==4?"active":"":"")" asp-action="index" accesskey="л" asp-route-stateStatment="4">Выданные заявителю</a>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?Model.Search.stateStatment==5?"active":"":"")" asp-action="index" accesskey="д" asp-route-stateStatment="5">Удаленные</a>
+    <a class="btn btn-outline-info m-1 @(Model.Search!=null?(Model.Search.stateStatment==0||Model.Search.stateStatment==null)?"active":"":"active")" asp-action="index" accesskey="ж" asp-route-stateStatment="0">Весь список</a>
+</p>
+
+<p class="alert alert-info @(Model.FilterViewModel!=null?"alert-warning":"")">
+    <button  accesskey="8" class="btn btn-link w-75 text-left" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Фильтр
+    </button>
+     <a style="margin-left:10px;" class="btn btn-link float-right text-danger" role="button" asp-action="index" asp-route-page="-1">Сбросить фильтр</a>
+</p>
+
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        @await Html.PartialAsync("_viewFilter", Model.FilterViewModel)
+    </div>
+</div>
+<hr />
+</div>
+<div name="viewTable">
+    @await Html.PartialAsync("_viewTable", Model)
+</div>
+}
+<script src="~/js/home.js" asp-append-version="true"></script>

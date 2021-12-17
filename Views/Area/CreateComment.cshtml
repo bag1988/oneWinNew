@@ -1,0 +1,51 @@
+﻿@model siteDocRegComentModel
+@inject getList list
+@{
+    ViewData["Title"] = "Коментарий к уполномоченому органу на сайт";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <partial name="navList"/>
+    <hr />
+   
+    <form asp-action="CreateComment" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>        
+         <input asp-for="Id" type="hidden" class="form-control" />
+         <div class="form-group row">
+            <label asp-for="IdDep" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select asp-for="IdDep" class="form-control" asp-items="@(await list.departmentList())"></select>
+            </div>
+        </div>
+         <div class="form-group row">
+            <label asp-for="IdDoc" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <select asp-for="IdDoc" class="form-control" asp-items="@(await list.docForDepartmentList((Model!=null?Model.IdDep.ToString():(await list.departmentList()).ElementAt(0).Value)))"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Text" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Text" class="form-control"/>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+        </div>        
+        <div class="form-group row">
+            <label asp-for="Email" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group row"  style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a name="deleteComment" asp-action="deleteComment" class="btn btn-link">Удалить</a>
+        </div>
+    </form>
+    
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

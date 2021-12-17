@@ -1,0 +1,30 @@
+﻿@model List<adminProcModel>
+
+@if(Model!=null)
+    {
+       <ol id="adminProcList">
+            @foreach (adminProcModel proc in Model)
+            {
+                <li value="@proc.head.Number">
+                    <span>@proc.head.Name</span>
+                    <ol style="display:none;">
+                        @foreach (sectionAdminProc sec in proc.section)
+                        {
+                            <li value="@sec.section.Number">
+                                <span>@sec.section.Name</span>
+                                <ol style="display:none;">
+                                    @foreach (docRegModel doc in sec.docReg)
+                                    {
+                                        <li value="@doc.Num">
+                                           <label><input type="hidden" name="@doc.RegID"/> <b>@doc.Number</b> @doc.RegName</label>                                        
+                                            <hr />
+                                        </li>
+                                    }
+                                </ol>
+                            </li>
+                        }
+                    </ol>
+                </li>
+            }
+        </ol>
+    }

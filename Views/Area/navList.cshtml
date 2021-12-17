@@ -1,0 +1,11 @@
+﻿<nav class="nav nav-pills nav-justified">
+                  
+            <a asp-action="CreateArea" class="nav-item nav-link @(!Context.Request.Query.ContainsKey("idArea")&&ViewContext.RouteData.Values["Action"].ToString()=="CreateArea"?"active":"")">Добавить район</a>
+           
+        
+            <a asp-action="CreateCurator" class="nav-item nav-link @(ViewContext.RouteData.Values["Action"].ToString()=="CreateCurator"?"active":"")">Добавить куратора</a>
+            <a asp-action="CreateDepartment" class="nav-item nav-link @(ViewContext.RouteData.Values["Action"].ToString()=="CreateDepartment"?"active":"")">Добавить отдел</a>
+            <a asp-action="CreatePerformer" class="nav-item nav-link @(ViewContext.RouteData.Values["Action"].ToString()=="CreatePerformer"?"active":"")">Добавить исполнителя</a>
+        
+        <a asp-action="CreateComment" class="nav-item nav-link @(ViewContext.RouteData.Values["Action"].ToString()=="CreateComment"?"active":"")">Комментарий</a>
+    </nav>

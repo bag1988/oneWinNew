@@ -1,0 +1,299 @@
+﻿@model FilterViewModel
+@inject getList list
+<form method="get" asp-action="index">
+    <query model-page="@(Model??new FilterViewModel())"></query>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-3">           
+            <h5 class="col-12">Номер</h5>
+            <div class="col-md-6">
+                <label asp-for="startNumber" class="control-label"></label>
+                <input asp-for="startNumber" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="endNumber" class="control-label"></label>
+                <input asp-for="endNumber" class="form-control form-control-sm" />
+            </div>           
+        </div>
+        <div class="form-row border-inset col-md-9">            
+            <h5 class="col-12">Заявитель</h5>
+            <div class="col-md">
+                <label asp-for="LName" class="control-label"></label>
+                <input asp-for="LName" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="FName" class="control-label"></label>
+                <input asp-for="FName" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="MName" class="control-label"></label>
+                <input asp-for="MName" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="OrgName" class="control-label"></label>
+                <input asp-for="OrgName" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="PhoneNo" class="control-label"></label>
+                <input asp-for="PhoneNo" class="form-control form-control-sm" />
+            </div>            
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-row border-inset col-md-8">
+            <h5 class="col-12">Адрес</h5>
+            <div class="col-md">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="Home" class="control-label"></label>
+                <input asp-for="Home" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="Flat" class="control-label"></label>
+                <input asp-for="Flat" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Обращение</h5>
+            <div class="col-md">
+                <label asp-for="StartGetDateTime" class="control-label"></label>
+                <input asp-for="StartGetDateTime" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndGetDateTime" class="control-label"></label>
+                <input asp-for="EndGetDateTime" class="form-control form-control-sm" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Передали в отдел</h5>
+            <div class="col-md">
+                <label asp-for="StartOutDeptDate" class="control-label"></label>
+                <input asp-for="StartOutDeptDate" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndOutDeptDate" class="control-label"></label>
+                <input asp-for="EndOutDeptDate" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Вернули из отдела</h5>
+            <div class="col-md">
+                <label asp-for="StartReturnInDeptDate" class="control-label"></label>
+                <input asp-for="StartReturnInDeptDate" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndReturnInDeptDate" class="control-label"></label>
+                <input asp-for="EndReturnInDeptDate" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Выдали</h5>
+            <div class="col-md">
+                <label asp-for="StartIssueDate" class="control-label"></label>
+                <input asp-for="StartIssueDate" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndIssueDate" class="control-label"></label>
+                <input asp-for="EndIssueDate" class="form-control form-control-sm" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Срок исполнения</h5>
+            <div class="col-md">
+                <label asp-for="StartMustBeReady" class="control-label"></label>
+                <input asp-for="StartMustBeReady" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndMustBeReady" class="control-label"></label>
+                <input asp-for="EndMustBeReady" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="form-row border-inset col-md-5">
+            <h5 class="col-12">Нарушение сроков исполнения</h5>
+            <div class="col-md">
+                <label asp-for="StartOutdated" class="control-label"></label>
+                <input asp-for="StartOutdated" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="EndOutdated" class="control-label"></label>
+                <input asp-for="EndOutdated" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="sort" class="control-label"></label>
+                <select asp-for="sort" asp-items="@Html.GetEnumSelectList<enumList.SortState>()" class="form-control form-control-sm">
+                    <option value="">----</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row border-inset col-md-3">
+            <h5 class="col-12">Приближение сроков</h5>
+            <div class="col-md">
+                <label asp-for="PotentiallyOutdated" class="control-label"></label>
+                <input asp-for="PotentiallyOutdated" class="form-control form-control-sm" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-12">
+            <h5 class="col-12">Куратор</h5>
+            <div class="col-md">
+                <label asp-for="CuratorFiltr" class="control-label"></label>
+                <select asp-for="CuratorFiltr" class="form-control form-control-sm" asp-items="@(await list.curatorList())">
+                    <option value="">----</option>
+                </select>
+            </div>
+            <div class="col-md">
+                <label asp-for="DepartamentFiltr" class="control-label"></label>
+                <select asp-for="DepartamentFiltr" class="form-control form-control-sm" asp-items="@((Model!=null&&Model.CuratorFiltr!=null)? await list.departmentList(Model.CuratorFiltr.ToString()):null)">
+                    <option value="">----</option>
+                </select>
+            </div>
+            <div class="col-md">
+                <label asp-for="PerformerFiltr" class="control-label"></label>
+                <select asp-for="PerformerFiltr" class="form-control form-control-sm" asp-items="@((Model!=null&&Model.DepartamentFiltr!=null)? await list.performertList(Model.DepartamentFiltr.ToString()):null)">
+                    <option value="">----</option>
+                </select>
+            </div>
+            <div class="col-md">
+                <label asp-for="Registrator" class="control-label"></label>
+                <input asp-for="Registrator" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="Proceeding" class="control-label"></label>
+                <input asp-for="Proceeding" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="SentNotificationRegistryNumberFilter" class="control-label"></label>
+                <input asp-for="SentNotificationRegistryNumberFilter" class="form-control form-control-sm" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-4">
+            <h5 class="col-12">Дата направления уведомления</h5>
+            <div class="col-md">
+                <label asp-for="SentNotificationBeginDateFilter" class="control-label"></label>
+                <input asp-for="SentNotificationBeginDateFilter" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="SentNotificationEndDateFilter" class="control-label"></label>
+                <input asp-for="SentNotificationEndDateFilter" class="form-control form-control-sm" />
+            </div>
+
+        </div>
+        <div class="form-row border-inset col-md-8">
+            <h5 class="col-12">Решение</h5>
+            <div class="col-md">
+                <label asp-for="NumberSolution" class="control-label"></label>
+                <input asp-for="NumberSolution" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="DateSolution" class="control-label"></label>
+                <input asp-for="DateSolution" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md">
+                <label asp-for="SolutionFilter" class="control-label"></label>
+                <select asp-for="SolutionFilter" class="form-control form-control-sm">
+                    <option value="">----</option>
+                    <option>Положительно</option>
+                    <option>Отрицательно</option>
+                    <option>Отказано в осуществлении</option>
+                    <option>Отказано в приёме</option>
+                    <option>Переадресовано</option>
+                    <option>Отозвано</option>
+                </select>
+            </div>
+            <div class="col-md">
+                <label asp-for="EvaluationNotificationFilter" class="control-label"></label>
+                <select asp-for="EvaluationNotificationFilter" class="form-control form-control-sm">
+                    <option value="">----</option>
+                    <option>Выдано на руки</option>
+                    <option>По почте</option>
+                    <option>В виде электронного документа</option>
+                    <option>Курьером</option>
+                    <option>Иным способом</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-row border-inset col-md-12">
+            <h5 class="col-12">Административная процедура</h5>
+            <div class="col-md-3">
+                <label asp-for="HeadsID" class="control-label"></label>
+                @{
+                    bool? legal = null;
+                    var typePerson = "";
+                    if (Context.Request.Query.ContainsKey("typePerson"))
+                    {
+                        typePerson = Context.Request.Query["typePerson"];
+                    }
+                    else if (Context.Request.Cookies.ContainsKey("typePerson"))
+                    {
+                        typePerson = Context.Request.Cookies["typePerson"];
+                    }
+
+                    switch (typePerson)
+                    {
+                        case "1": legal = false; break;
+                        case "2": legal = true; break;
+                        case "4": legal = false; break;
+                        case "5": legal = true; break;
+                        case "6": legal = true; break;
+                        case "7": legal = false; break;
+                        case "8": legal = true; break;
+                    }
+                }
+                <select asp-for="HeadsID" class="form-control form-control-sm" asp-items="@(await list.headsList(legal))">
+                    <option value="">----</option>
+                </select>
+
+                <label asp-for="SectionID" class="control-label"></label>
+                <select asp-for="SectionID" class="form-control form-control-sm" asp-items="@((Model!=null&&Model.HeadsID!=null)? await list.sectList(Model.HeadsID.ToString()):null)">
+                    <option value="">----</option>
+                </select>
+            </div>
+
+            <div class="col-md">
+                <label asp-for="DocRegList" class="control-label"></label>
+                <select multiple asp-for="DocRegList" class="form-control form-control-sm" asp-items="@((Model!=null&&Model.SectionID!=null)? await list.adminProcList(Model.SectionID.ToString()):null)">
+                    <option value="">----</option>
+                </select>
+                <span class="text-danger">Для выбора нескольких процедур, нажмите и удерживайте Ctrl</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <input type="submit" value="Искать" class="btn btn-primary btn-sm" />
+            <a style="margin-left:10px;" class="btn btn-info btn-sm" role="button" asp-action="index" asp-route-page="-1">Сбросить фильтр</a>
+        </div>
+    </div>
+
+    <div class="row paddingChild5 displayInline">
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

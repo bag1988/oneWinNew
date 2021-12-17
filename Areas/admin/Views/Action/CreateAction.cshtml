@@ -1,0 +1,36 @@
+﻿@model actionModel
+@{
+    ViewData["Title"] = "Новое действие";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+<nav class="nav nav-pills nav-justified">
+            <a asp-area="admin" asp-controller="action" asp-action="index" class="nav-item nav-link">Действия</a>
+            <a asp-area="admin" asp-controller="action" asp-action="controller" class="nav-item nav-link">Контроллеры</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateAction" class="nav-item nav-link active">Добавить действие</a>
+            <a asp-area="admin" asp-controller="action" asp-action="CreateController" class="nav-item nav-link">Добавить контроллер</a>
+        </nav>        
+        <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <form asp-action="CreateAction" asp-area="admin" method="post">
+        <input type="hidden" asp-for="id" />
+        <div class="form-group">
+            <label asp-for="idController"></label>
+            <select asp-for="idController" class="form-control" asp-items="@ViewBag.Controller" ></select>
+            <span asp-validation-for="idController" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="nameAction"></label>
+            <input asp-for="nameAction" class="form-control" />
+            <span asp-validation-for="nameAction" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="addressAction"></label>
+            <input asp-for="addressAction" class="form-control" />
+            <span asp-validation-for="addressAction" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+        <a class="btn btn-sm" asp-area="admin" asp-controller="action" asp-action="index">Отмена</a>
+    </form>
+</div>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<actionModel>
+    @{
+    ViewData["Title"] = "Список Действий";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    <nav class="nav nav-pills nav-justified">
+        <a asp-area="admin" asp-controller="action" asp-action="index" class="nav-item nav-link active">Действия</a>
+        <a asp-area="admin" asp-controller="action" asp-action="controller" class="nav-item nav-link">Контроллеры</a>
+        <a asp-area="admin" asp-controller="action" asp-action="CreateAction" class="nav-item nav-link">Добавить действие</a>
+        <a asp-area="admin" asp-controller="action" asp-action="CreateController" class="nav-item nav-link">Добавить контроллер</a>
+    </nav>
+    <hr />
+    <form asp-action="index" asp-area="admin" method="get">
+    <div class="form-group">
+        <label for="idController">Контроллер</label>
+        <select name="idController" class="form-control" asp-items="@ViewBag.Controller">
+            <option value="">----</option>
+        </select>        
+    </div>
+     <button type="submit" class="btn btn-primary">Применить</button>
+    </form>
+    <hr />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Действие</th>
+                <th>Контроллер</th>
+                <th>Роли</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        @foreach (var role in Model)
+        {
+            <tr class="@(ViewBag.Action.Contains(role.addressAction)?"":"tr-danger")">
+                <td>@role.nameAction<br /><small>@role.addressAction</small></td>
+                <td>@role.controller.nameController<br /><small>@role.controller.addressController</small></td>
+                <td>
+                    <div id=@("viewRoles"+role.id)>
+                        @foreach (var r in role.roleAction)
+                        {
+                            <b>@r.Role.Name</b><br>
+                        }
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-sm" asp-area="admin" asp-controller="action" asp-action="CreateAction" asp-route-id="@role.id">Редактировать</a>
+                    <span class="btn btn-sm" onclick="AddRoleAction('@role.id')">Добавить роли</span>
+                    <span class="btn btn-sm" onclick="deleteAction('@role.id', 'action')">Удалить</span>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+<script src="~/js/action.js"></script>

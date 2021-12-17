@@ -1,0 +1,10 @@
+﻿@model List<docRegModel>
+
+<h4>Список административных процедур</h4>
+<input type="hidden" value="@ViewBag.idDoc" id="idDoc" />
+<ul>
+    @foreach (var d in Model)
+    {        
+        <li data-id="@d.RegID">@d.Number - @d.RegName</li>
+    }
+</ul>

@@ -1,0 +1,154 @@
+﻿@model settingModel
+@inject getList list
+@{
+    ViewData["Title"] = "Настройки";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" class="nav-item nav-link active">Настройки</a>
+        <a asp-action="loadGP" class="nav-item nav-link">Загрузка из отдела ЖП</a>
+        @*<a asp-action="loadStreet" class="nav-item nav-link">Загрузить дома</a>*@
+        <a asp-action="sendGP" class="nav-item nav-link">Выгрузка данных</a>
+    </nav>
+    <hr />
+    @if (Model != null && Model.ID != 0)
+    {
+        <form asp-action="index" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ID" type="hidden" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="LoginBRTI" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="LoginBRTI" class="form-control" />
+                    <span asp-validation-for="LoginBRTI" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PassBrti" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PassBrti" class="form-control" />
+                    <span asp-validation-for="PassBrti" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PathBank" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PathBank" class="form-control" />
+                    <span asp-validation-for="PathBank" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PathGP" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PathGP" class="form-control" />
+                    <span asp-validation-for="PathGP" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PathSite" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PathSite" class="form-control" />
+                    <span asp-validation-for="PathSite" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Phone" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Areas_Id" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="Areas_Id" class="form-control" asp-items="@(await list.areaList())"></select>
+                    <span asp-validation-for="Areas_Id" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="MailLogin" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="MailLogin" class="form-control" />
+                    <span asp-validation-for="MailLogin" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MailPass" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="MailPass" class="form-control" />
+                    <span asp-validation-for="MailPass" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="ValueArea" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ValueArea" disabled="disabled" class="form-control" />
+                    <span asp-validation-for="ValueArea" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MailLoginForNotification" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="MailLoginForNotification" class="form-control" />
+                    <span asp-validation-for="MailLoginForNotification" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MailPassForNotification" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="MailPassForNotification" class="form-control" />
+                    <span asp-validation-for="MailPassForNotification" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="StartDocNoFis" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="StartDocNoFis" class="form-control" />
+                    <span asp-validation-for="StartDocNoFis" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="StartDocNoYur" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="StartDocNoYur" class="form-control" />
+                    <span asp-validation-for="StartDocNoYur" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="StartOrderNo" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="StartOrderNo" class="form-control" />
+                    <span asp-validation-for="StartOrderNo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row" style="padding-left:15px;">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+    else
+    {
+        @:нет данных!!!
+    }
+
+
+
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

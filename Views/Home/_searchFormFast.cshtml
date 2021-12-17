@@ -1,0 +1,76 @@
+﻿@model searchFastModel
+<form method="get" asp-action="Index">
+    <query model-page="@(Model??new searchFastModel())"></query>
+    <div class="form-inline paddingChild5">
+        <div class="form-group">
+            <label for="DocNoFilter">Номер</label>
+            <input class="form-control form-control-sm" asp-for="DocNoFilter">
+        </div>
+        <div class="form-group">
+            <label for="LNameFilter">Заявитель</label>
+            <input class="form-control form-control-sm" asp-for="LNameFilter">
+        </div>
+        <div class="form-group">
+            <label for="OrgNameFilter">Организация</label>
+            <input class="form-control form-control-sm" asp-for="OrgNameFilter">
+        </div>
+        <div class="form-group">
+            <label for="PhoneNoFilter">Телефон</label>
+            <input class="form-control form-control-sm" asp-for="PhoneNoFilter">
+        </div>
+        <div class="form-group">
+            <label for="AddressFilter">Адрес</label>
+            <input class="form-control form-control-sm" asp-for="AddressFilter">
+        </div>
+        <div class="form-group">
+            <label for="GettingDateFilter">Дата поступления заявления</label>
+            <input type="date" class="form-control form-control-sm" asp-for="GettingDateFilter">
+        </div>
+        <div class="form-group">
+            <label for="OutDeptDateFilter">Дата передачи в отдел</label>
+            <input type="date" class="form-control form-control-sm" asp-for="OutDeptDateFilter">
+        </div>
+        <div class="form-group">
+            <label for="ReturnInDeptDateFilter">Дата возврата из отдела</label>
+            <input type="date" class="form-control form-control-sm" asp-for="ReturnInDeptDateFilter">
+        </div>
+        <div class="form-group">
+            <label for="IssueDateFilter">Дата выдачи заявителю</label>
+            <input type="date" class="form-control form-control-sm" asp-for="IssueDateFilter">
+        </div>
+
+        <div class="form-group">
+            <label for="MustBeReadyFilter">Дата готовности</label>
+            <input type="date" class="form-control form-control-sm" asp-for="MustBeReadyFilter">
+        </div>
+        <div class="form-group">
+            <label for="PerformerNameFilter">Исполнитель</label>
+            <input class="form-control form-control-sm" asp-for="PerformerNameFilter">
+        </div>
+        <div class="form-group">
+            <label for="NumberFilter">Номер процедуры</label>
+            <input class="form-control form-control-sm" asp-for="NumberFilter">
+        </div>
+        <div class="form-group">
+            <label for="RegFilter">Регистратор</label>
+            <input class="form-control form-control-sm" asp-for="RegistratorFilter">
+        </div>
+        <div class="form-group">
+            <label for="NotesFilter">Комментарий</label>
+            <input class="form-control form-control-sm" asp-for="NotesFilter">
+        </div>
+        <div class="form-group">
+            <label for="PersonalNoFilter">Личный номер</label>
+            <input class="form-control form-control-sm" asp-for="PersonalNoFilter">
+        </div>
+        <div class="form-group">
+            <label for="emailFilter">e-mail</label>
+            <input class="form-control form-control-sm" asp-for="emailFilter">
+        </div>
+
+        <div class="form-group">
+            <button type="submit" value="search" class="btn btn-primary btn-sm">Поиск</button>
+            <a style="margin-left:10px;" class="btn btn-info btn-sm" role="button" asp-action="index" asp-route-page="0">Очистить форму</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,47 @@
+﻿@model headModel
+@{
+    ViewData["Title"] = @Context.Request.Query["idDoc"].ToString() != "" ? "Редактировать главу" : "Добавить главу";
+}
+ <h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+    
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" asp-route-legal="false" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link">Только для физических лиц</a>
+            <a asp-action="index" asp-route-legal="true" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link">Только для юридических лиц</a>
+           <a asp-action="index" asp-route-searchName="@Context.Request.Query["searchName"]" class="nav-item nav-link">Нераспределенные</a>
+            
+        <a asp-action="create" class="nav-item nav-link active">Добавить</a>
+    </nav>
+    <hr />
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model != null && Model.HedID != Guid.Empty)
+        {
+            <input asp-for="HedID" type="hidden" class="form-control" />
+        }
+        <div class="form-group row">
+            <label asp-for="Name" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Name" class="form-control"></textarea>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Number" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row" style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a class="btn btn-link" asp-action="Index">Назад к списку</a>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

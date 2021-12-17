@@ -1,0 +1,52 @@
+﻿@model adminProcForPerformer
+
+<input type="hidden" name="idPerformer" value="@ViewBag.idPerformer" />
+<nav class="nav nav-pills nav-justified">
+           
+        <span onclick="viewAdminProcForPerformer('false')" class="nav-item nav-link">Добавить к процедуре(физ.лица)</span>
+        <span onclick="viewAdminProcForPerformer('true')" class="nav-item nav-link">Добавить к процедуре(юр.лица)</span>
+   
+</nav>
+<hr />
+
+
+
+@if (Model != null)
+{
+    @if (Model.DocsReg != null)
+    {
+        <h5>Исполнитель по процедурам</h5>
+        <ul>
+            @foreach (docRegModel doc in Model.DocsReg)
+            {
+                <li>
+                    <b>@doc.Number</b> @doc.RegName
+                </li>
+            }
+        </ul>
+    }
+    @if (Model.DocsResponsible != null)
+    {
+        <h5>Ответственный по процедурам</h5>
+        <ul>
+            @foreach (docRegModel doc in Model.DocsResponsible)
+            {
+                <li>
+                    <b>@doc.Number</b> @doc.RegName
+                </li>
+            }
+        </ul>
+    }
+    @if (Model.DocumentsAccept != null)
+    {
+        <h5>Прием документов по процедурам</h5>
+        <ul>
+            @foreach (docRegModel doc in Model.DocumentsAccept)
+            {
+                <li>
+                    <b>@doc.Number</b> @doc.RegName
+                </li>
+            }
+        </ul>
+    }
+}

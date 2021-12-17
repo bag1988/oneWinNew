@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Одно Окно</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css"  asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark navbar-expand-xl box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Администрирование
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="admin" asp-controller="roles" asp-action="userList">Список пользавателей</a>
+                                    <a class="dropdown-item" asp-area="admin" asp-controller="roles" asp-action="index">Роли</a>
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Зарегистрировать пользователя</a>
+                                    <a class="dropdown-item" asp-area="admin" asp-controller="action" asp-action="index">Действия и контроллеры</a>
+                                    <a class="dropdown-item" asp-area="admin" asp-controller="log" asp-action="index">История действий</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Справочники
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="adminProc" asp-action="Index">Административные процедуры</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="docs" asp-action="Index">Документы</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="docszapr" asp-action="Index">Запрашиваемые документы</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="orgzapr" asp-action="Index">Организации для осуществления запросов</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="head" asp-action="Index">Главы и разделы</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="normdoc" asp-action="Index">Нормативные документы</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="soglasovania" asp-action="Index">Согласования</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="orgsog" asp-action="Index">Организации для согласования</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="area" asp-action="Index">Отдел</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="calendar" asp-action="Index">Календарь</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="OrgIssues" asp-action="Index">Органы выдавшие документы</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="address" asp-action="Index">Адреса</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Справочники для сайта
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="guide" asp-action="Index" asp-route-nameTable="ViewSiteCost">Размер оплаты</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="guide" asp-action="Index" asp-route-nameTable="ViewSiteValidaty">Срок действия документов</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="guide" asp-action="Index" asp-route-nameTable="ViewSiteInssue">Виды сроков</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="payment" asp-action="Index">Р/С</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="guide" asp-action="Index" asp-route-nameTable="ViewSiteSections">Перечни</a>
+                                </div>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Настройки</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-area="" asp-controller="reports" asp-action="Index">Отчеты</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-area="" asp-controller="analytics" asp-action="Index">Аналитика</a>
+                            </li>
+                      
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            &copy; 2021 Одно окно
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>    
+    <script src="~/js/createWindow.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

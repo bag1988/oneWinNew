@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<userModel> SignInManager
+@inject UserManager<userModel> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        userModel user = await UserManager.GetUserAsync(User);
+
+        <li class="nav-item">
+            <a class="nav-link">@user.Login</a>
+        </li>
+        @if (User.IsInRole("administrator"))
+        {
+            var otdel = user.otdel;
+            if(Context.Request.Query.ContainsKey("otdel"))
+            {
+                otdel = Context.Request.Query["otdel"];
+            }
+            else if (Context.Request.Cookies.ContainsKey("otdel"))
+            {
+                otdel = Context.Request.Cookies["otdel"];
+            }            
+            <li class="nav-item dropdown">
+                <a name="otdel" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @(dictionaryList.otdelList[otdel]) район
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @foreach (var a in dictionaryList.otdelList)
+                    {
+                        <a class="dropdown-item" asp-area="" asp-controller="home" asp-action="index" asp-route-otdel="@a.Key">@a.Value</a>
+                    }
+                </div>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <span name="otdel" class="nav-link">
+                    @(dictionaryList.otdelList[user.otdel]) район
+                </span>
+            </li>
+        }
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Выход</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+        </li>
+    }
+</ul>

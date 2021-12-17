@@ -1,0 +1,64 @@
+﻿@model sogOrgModel
+@{
+    ViewData["Title"] = @Context.Request.Query["idDoc"].ToString() != "" ? "Редактировать организацию для согласования" : "Добавить организацию для согласования";
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+<div class="col-md-8 offset-md-2">
+     
+    <nav class="nav nav-pills nav-justified">
+        <a asp-action="index" asp-route-legal="false" class="nav-item nav-link">Список организаций</a>
+        <a asp-action="create" class="nav-item nav-link active">Добавить</a>
+    </nav>
+    <hr />
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model != null && Model.SoglOrgID != Guid.Empty)
+        {
+            <input asp-for="SoglOrgID" type="hidden" class="form-control" />
+        }
+        <div class="form-group row">
+            <label asp-for="DeptName" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="DeptName" class="form-control"></textarea>
+                <span asp-validation-for="DeptName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Addres" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Addres" class="form-control" />
+                <span asp-validation-for="Addres" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Cabinet" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Cabinet" class="form-control" />
+                <span asp-validation-for="Cabinet" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PhoneNo" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PhoneNo" class="form-control" />
+                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Notes" class="col-md-2 col-form-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Notes" class="form-control"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row" style="padding-left:15px;">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a class="btn btn-link" asp-action="Index">Назад к списку</a>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

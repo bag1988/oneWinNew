@@ -1,0 +1,104 @@
+﻿@model Guid
+
+@inject getList list
+
+@if (Model != Guid.Empty)
+{
+    List<familyModel> family = await list.loadFamily(Model);
+    if (family.Count > 0)
+    {
+        <table class="table table-sm table-bordered table-striped">
+            <thead class="thead-green">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().LName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().FName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().MName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().NRotN)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().AddressDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().PassportNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().PersonalNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().PassIssuer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => family.First().PassIssuerDate)
+                    </th>
+                    <th style="width:20%;">
+                        Действие
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in family)
+                {
+                    <tr>
+                        <td>
+                            @item.LName
+                        </td>
+                        <td>
+                            @item.FName
+                        </td>
+                        <td>
+                            @item.MName
+                        </td>
+                        <td>
+                            @item.DOB.Value.ToString("d")
+                        </td>
+                        <td>
+                            @item.NRotN
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @(item.AddressDate==null?"":item.AddressDate.Value.ToString("d"))
+                        </td>
+                        <td>
+                            @item.PassportNo
+                        </td>
+                        <td>
+                            @item.PersonalNo
+                        </td>
+                        <td>
+                            @item.PassIssuer
+                        </td>
+                        <td>
+                            @item.PassIssuerDate
+                        </td>
+                        <td>
+                            <div class="form-row">
+                                <a asp-action="create" asp-controller="family" asp-route-regId="@item.RegistrationID" asp-route-idFamily="@item.FamilyID" class="m-1">Редактировать</a>
+                                <span onclick="deleteFamily('@item.FamilyID')" class="m-1 text-danger">Удалить</span>                               
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    else
+    {
+        <div class="alert alert-danger" role="alert">Нет данных о составе семьи</div>
+    }
+}

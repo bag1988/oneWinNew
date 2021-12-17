@@ -1,0 +1,207 @@
+﻿@model msgModel
+@inject getList list
+@{
+    ViewData["Title"] = "Запросы. " + (Model.MsgId == Guid.Empty ? "Добавить запрос" : "Редактировать запрос");
+}
+<h2 class="h2 nav-green">@ViewData["Title"]</h2>
+
+<nav class="nav nav-pills nav-justified">
+    <a asp-action="edit" asp-controller="create" asp-route-regId="@Model.RegistrationId" class="nav-item nav-link">Заявитель</a>
+    <a asp-action="index" asp-controller="family" asp-route-regId="@Model.RegistrationId" class="nav-item nav-link">Состав семьи</a>
+    <a asp-action="Transfer" asp-controller="family" asp-route-regId="@Model.RegistrationId" class="nav-item nav-link active">Запросы</a>
+</nav>
+<hr />
+
+<div class="m-1">
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong> @ViewBag.message</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <form asp-action="addtransfer" asp-route-regId="@Model.RegistrationId" enctype="multipart/form-data">
+        <input type="hidden" asp-for="RegistrationId" />
+        <input type="hidden" asp-for="MsgId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-12">
+                    <label asp-for="Sent" class="col-form-label"></label>
+                    <select asp-for="Sent" class="form-control" asp-items="@(await list.getZaprForTransfer(Model.RegistrationId))">                        
+                    </select>
+                    <span asp-validation-for="Sent" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-3">
+                    <label asp-for="LName" class="col-form-label"></label>
+                    <input asp-for="LName" class="form-control text-capitalize" />
+                    <span asp-validation-for="LName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="FName" class="col-form-label"></label>
+                    <input asp-for="FName" class="form-control text-capitalize" />
+                    <span asp-validation-for="FName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="MName" class="col-form-label"></label>
+                    <input asp-for="MName" class="form-control text-capitalize" />
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="DOB" class="col-form-label"></label>
+                    <input asp-for="DOB" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="DocType" class="col-form-label"></label>
+                    <select asp-for="DocType" class="form-control" asp-items="@(new SelectList(dictionaryList.typeDoc ,"Key","Value"))">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="DocNo" class="col-form-label"></label>
+                    <input asp-for="DocNo" class="form-control text-uppercase" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="PersonalNo" class="col-form-label"></label>
+                    <input asp-for="PersonalNo" class="form-control text-uppercase" />
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="DocIssuer" class="col-form-label"></label>
+                    <input asp-for="DocIssuer" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="DocIssueDate" class="col-form-label"></label>
+                    <input asp-for="DocIssueDate" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-2">
+                    <label asp-for="City" class="col-form-label"></label>
+                    <input asp-for="City" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Address" class="col-form-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Home" class="col-form-label"></label>
+                    <input asp-for="Home" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Flat" class="col-form-label"></label>
+                    <input asp-for="Flat" class="form-control" />
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="AddressDate" class="col-form-label"></label>
+                    <input asp-for="AddressDate" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+                <div class="col-md">
+                    <label asp-for="PayNo" class="col-form-label"></label>
+                    <input type="number" asp-for="PayNo" class="form-control" />
+                </div>
+                <div class="col-md-1">
+                    <label asp-for="Summ" class="col-form-label"></label>
+                    <input type="number" asp-for="Summ" class="form-control" />
+                </div>
+
+                <div class="col-md">
+                    <label asp-for="DogNo" class="col-form-label"></label>
+                    <input type="number" asp-for="DogNo" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="DogDate" class="col-form-label"></label>
+                    <input asp-for="DogDate" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Bank" class="col-form-label"></label>
+                    <select asp-for="Bank" class="form-control" asp-items="@(await list.getMfos())">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="IssueDate" class="col-form-label"></label>
+                    <input asp-for="IssueDate" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Srok" class="col-form-label"></label>
+                    <input asp-for="Srok" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label asp-for="OrganisationID" class="col-form-label"></label> <a asp-area="" target="_blank" asp-controller="orgzapr" asp-action="create">Добавить</a>
+                    <input type="hidden" asp-for="@Model.OrganisationID" />
+                    <input class="form-control" asp-for="orgsZapr.Name" />
+                    <span asp-validation-for="OrganisationID" class="text-danger"></span>
+                    @*<select asp-for="OrganisationID" class="form-control" asp-items="@(await list.orgZaprList())">
+                    </select>*@
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label">Email</label>
+                    <label name="emailOrg" class="form-control disabledSpan"></label>
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label">Адрес</label>
+                    <label name="adresOrg" class="form-control disabledSpan"></label>
+                </div>
+            </div>
+        </div>
+        <div class="border-inset">
+            <div class="form-group row">
+
+                <div class="col-md-12">
+                    <label asp-for="Notes" class="col-form-label"></label>
+                    <textarea asp-for="Notes" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group row">
+            <div class="col-md-12">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @* <a class="btn btn-link" asp-action="transfer" asp-controller="family" asp-route-regId="@Model.RegistrationId">Назад</a>*@
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<hr />
+<div name="loadFamily">
+    <partial name="loadtransfer" model="@Model.RegistrationId"></partial>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script src="~/js/create.js" asp-append-version="true"></script>
